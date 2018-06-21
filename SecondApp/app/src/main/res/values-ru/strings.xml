@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Стихотворение Пушкина</string>
+    <string name="verse">Одна свеча избу лишь слабо освещала;\nЗажгли другую, — что ж? изба светлее стала.\nПравдивы древнего речения слова:\nУм хорошо, а лучше два.</string>
+</resources>

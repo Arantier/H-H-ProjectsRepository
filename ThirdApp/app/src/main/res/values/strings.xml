@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ThirdApp</string>
+    <string name="current_activity">Личный профиль</string>
+    <string name="user_exit">Выйти из аккаунта</string>
+</resources>

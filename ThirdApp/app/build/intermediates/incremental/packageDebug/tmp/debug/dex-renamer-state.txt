@@ -1,13 +1,4 @@
-#Thu Jun 21 14:32:01 MSK 2018
-path.3=classes.dex
-path.2=classes.dex
-path.1=classes.dex
+#Fri Jun 22 17:14:04 MSK 2018
+base.0=C\:\\Users\\Dmitry\\Desktop\\CodingStuff\\Heads and hands\\ThirdApp\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
-renamed.3=classes4.dex
-renamed.2=classes3.dex
-renamed.1=classes2.dex
 renamed.0=classes.dex
-base.3=C\:\\Users\\Dmitry\\Desktop\\CodingStuff\\ThirdApp\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\63
-base.2=C\:\\Users\\Dmitry\\Desktop\\CodingStuff\\ThirdApp\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\65
-base.1=C\:\\Users\\Dmitry\\Desktop\\CodingStuff\\ThirdApp\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\64
-base.0=C\:\\Users\\Dmitry\\Desktop\\CodingStuff\\ThirdApp\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\66

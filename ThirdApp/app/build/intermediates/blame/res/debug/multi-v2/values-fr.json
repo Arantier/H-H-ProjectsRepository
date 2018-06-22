@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Dmitry\\Desktop\\CodingStuff\\ThirdApp\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-fr\\values-fr.xml",
+            "outputFile": "C:\\Users\\Dmitry\\Desktop\\CodingStuff\\Heads and hands\\ThirdApp\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-fr\\values-fr.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Dmitry\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-28.0.0-alpha3.aar\\520a75c725a7c0647eeb5859b5f7f4e1\\res\\values-fr\\values-fr.xml",

@@ -8,13 +8,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Toolbar">
+    <style name="toolbar">
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
-    <style name="UserInfo">
+    <style name="userInfo">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
@@ -24,7 +24,7 @@
         <item name="android:lineSpacingExtra">8sp</item>
     </style>
 
-    <style name="style_textInputLayout">
+    <style name="textInputLayout">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">17dp</item>
@@ -32,15 +32,12 @@
         <item name="android:clickable">false</item>
         <item name="android:focusable">false</item>
     </style>
-    <style name="style_textInputEdit" parent="AppTheme">
+    <style name="textInputEditText" parent="AppTheme">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@null</item>
         <item name="android:clickable">false</item>
         <item name="android:focusable">false</item>
-        <!--<item name="android:fontFamily">roboto-regular</item>-->
         <item name="android:textSize">16dp</item>
-        <item name="android:hint">SampleHint</item>
-        <item name="android:text">SampleText</item>
     </style>
 </resources>

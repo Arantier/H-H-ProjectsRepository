@@ -1,7 +1,8 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,136 +21,141 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/userNameContainer"
-            style="@style/style_textInputLayout"
+            android:id="@+id/textInpLayout_userName"
+            style="@style/textInputLayout"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="14dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView_title">
 
             <android.support.design.widget.TextInputEditText xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/user_name"
-                style="@style/style_textInputEdit"
-                android:hint="Имя" />
+                android:id="@+id/textInpEditText_userName"
+                style="@style/textInputEditText"
+                android:hint="@string/hint_name"/>
 
         </android.support.design.widget.TextInputLayout>
 
         <include
-            android:id="@+id/userNameEdit"
+            android:id="@+id/imgButton_userNameEdit"
             layout="@layout/imagebutton_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/textInpLayout_userName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/userNameContainer" />
+            app:layout_constraintTop_toTopOf="@+id/textInpLayout_userName" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/userSurnameContainer"
-            style="@style/style_textInputLayout"
+            android:id="@+id/textInpLayout_userSurname"
+            style="@style/textInputLayout"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="24dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userNameContainer">
+            app:layout_constraintTop_toBottomOf="@id/textInpLayout_userName">
 
             <android.support.design.widget.TextInputEditText xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/user_surname"
-                style="@style/style_textInputEdit"
-                android:hint="Фамилия" />
+                android:id="@+id/textInpEditText_userSurname"
+                style="@style/textInputEditText"
+                android:hint="@string/hint_surname" />
 
         </android.support.design.widget.TextInputLayout>
 
         <include
-            android:id="@+id/userSurnameEdit"
+            android:id="@+id/imgButton_userSurnameEdit"
             layout="@layout/imagebutton_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/textInpLayout_userSurname"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/userSurnameContainer" />
+            app:layout_constraintTop_toTopOf="@+id/textInpLayout_userSurname" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/userEmailContainer"
-            style="@style/style_textInputLayout"
+            android:id="@+id/textInpLayout_userEmail"
+            style="@style/textInputLayout"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="24dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userSurnameContainer">
+            app:layout_constraintTop_toBottomOf="@id/textInpLayout_userSurname">
 
             <android.support.design.widget.TextInputEditText xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/user_email"
-                style="@style/style_textInputEdit"
-                android:hint="E-mail"
+                android:id="@+id/textInpEditText_userEmail"
+                style="@style/textInputEditText"
+                android:hint="@string/hint_email"
                 android:inputType="textEmailAddress" />
 
         </android.support.design.widget.TextInputLayout>
 
         <include
-            android:id="@+id/userEmailEdit"
+            android:id="@+id/imgButton_userEmailEdit"
             layout="@layout/imagebutton_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/textInpLayout_userEmail"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/userEmailContainer" />
+            app:layout_constraintTop_toTopOf="@+id/textInpLayout_userEmail" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/userLoginContainer"
-            style="@style/style_textInputLayout"
+            android:id="@+id/textInpLayout_userLogin"
+            style="@style/textInputLayout"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="24dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userEmailContainer">
+            app:layout_constraintTop_toBottomOf="@id/textInpLayout_userEmail">
 
             <android.support.design.widget.TextInputEditText xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/user_login"
-                style="@style/style_textInputEdit"
-                android:hint="Логин" />
+                android:id="@+id/textInpEditText_userLogin"
+                style="@style/textInputEditText"
+                android:hint="@string/hint_login" />
 
         </android.support.design.widget.TextInputLayout>
 
         <include
-            android:id="@+id/userLoginEdit"
+            android:id="@+id/imgButton_userLoginEdit"
             layout="@layout/imagebutton_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/textInpLayout_userLogin"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/userLoginContainer" />
+            app:layout_constraintTop_toTopOf="@+id/textInpLayout_userLogin" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/userRegionContainer"
-            style="@style/style_textInputLayout"
+            android:id="@+id/textInpLayout_userRegion"
+            style="@style/textInputLayout"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="24dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userLoginContainer">
+            app:layout_constraintTop_toBottomOf="@id/textInpLayout_userLogin">
 
             <android.support.design.widget.TextInputEditText xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/user_region"
-                style="@style/style_textInputEdit"
-                android:hint="Ваш регион" />
+                android:id="@+id/textInpEditText_userRegion"
+                style="@style/textInputEditText"
+                android:hint="@string/hint_region" />
 
         </android.support.design.widget.TextInputLayout>
 
         <include
-            android:id="@+id/userRegionEdit"
+            android:id="@+id/imgButton_userRegionEdit"
             layout="@layout/imagebutton_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textInpLayout_userRegion"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/userRegionContainer" />
+            app:layout_constraintTop_toTopOf="@+id/textInpLayout_userRegion" />
 
         <TextView
             android:id="@+id/textView_exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/ic_menu_exit"
+            android:drawableLeft="@drawable/ic_menu_exit_rastr"
             android:drawablePadding="16dp"
             android:paddingBottom="16dp"
             android:paddingLeft="16dp"
@@ -159,7 +165,7 @@
             android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userRegionContainer"
+            app:layout_constraintTop_toBottomOf="@id/textInpLayout_userRegion"
             android:background="?attr/selectableItemBackground"/>
 
     </android.support.constraint.ConstraintLayout>

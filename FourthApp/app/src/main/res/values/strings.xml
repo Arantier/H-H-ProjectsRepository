@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FourthApp</string>
+    <string name="current_screen">Моя квартира</string>
 </resources>

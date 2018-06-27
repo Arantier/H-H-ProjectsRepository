@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
     <color name="windowBackground">#f3f5f6</color>
+    <color name="charcoal_grey">#363742</color>
+    <color name="warm_grey">#888888</color>
+    <color name="coral">#ff4242</color>
 </resources>

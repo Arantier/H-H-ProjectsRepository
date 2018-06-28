@@ -61,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
     class Adapter extends RecyclerView.Adapter<MainActivity.Adapter.ViewHolder>{
 
-        private static final int SQUARE_ITEM = 1;
-        private static final int WIDE_ITEM = 2;
-        private static final int WIDE_ITEM_DESCRIBED = 3;
+        public static final int SQUARE_ITEM = 1;
+        public static final int WIDE_ITEM = 2;
+        public static final int WIDE_ITEM_DESCRIBED = 3;
 
         List<MenuElementData> menuElements;
 
@@ -91,16 +91,13 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v;
             if (viewType==SQUARE_ITEM) {
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_element_square, parent, false);
+                return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_element_square, parent, false));
             } else if (viewType==WIDE_ITEM_DESCRIBED) {
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_element_wide_described, parent, false);
+                return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_element_wide_described, parent, false));
             } else {
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_element_wide, parent, false);
+                return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_element_wide, parent, false));
             }
-            ViewHolder newViewHolder = new ViewHolder(v);
-            return newViewHolder;
         }
 
         @Override
@@ -126,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemViewType(int position){
-            //Если описание не пусто и элемент или не является последним, или номер элемента чётный
+            //Если описание не пусто и элемент или не является последним c описанием, или номер элемента чётный
             if ((menu_Items.get(position).description!=null)&&
                     ((position%2==1)||
                             (menu_Items.get(position+1).description!=null))){
@@ -141,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private List<MenuElementData> imitationOfReceivingDataPackages(){
+        //Поскольку данные как бы получаются от сервера, я решил не прибегать
+        // к использованию ресурсов и добавить текст вручную
         List<MenuElementData> dataPackage = new ArrayList();
         dataPackage.add(new MenuElementData("Квитанции","- 40 080,55 \u20BD ",R.color.coral,R.drawable.ic_bill));
         dataPackage.add(new MenuElementData("Счётчики","Подайте показания",R.color.coral,R.drawable.ic_counter));
@@ -153,20 +152,6 @@ public class MainActivity extends AppCompatActivity {
         dataPackage.add(new MenuElementData("Мои заявки",R.drawable.ic_request));
         dataPackage.add(new MenuElementData("Памятка жителя А101",R.drawable.ic_about));
         return dataPackage;
-    }
-
-    public static class SimpleDialog extends DialogFragment{
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Похоже это диалог")
-                    .setPositiveButton("Не поспоришь", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-
-                        }
-                    });
-            return builder.create();
-        }
     }
 
     @Override

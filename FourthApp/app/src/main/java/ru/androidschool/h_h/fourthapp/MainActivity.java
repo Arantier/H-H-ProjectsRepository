@@ -2,6 +2,7 @@ package ru.androidschool.h_h.fourthapp;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,19 +28,19 @@ public class MainActivity extends AppCompatActivity {
         private int descriptionColorId;
         private int iconId;
 
-        public MenuElementData(String title, int iconId) {
+        MenuElementData(String title, int iconId) {
             this.title = title;
             this.iconId = iconId;
             description = null;
             descriptionColorId = R.color.warm_grey;
         }
 
-        public MenuElementData(String title, String description, int iconId) {
+        MenuElementData(String title, String description, int iconId) {
             this(title, iconId);
             this.description = description;
         }
 
-        public MenuElementData(String title, String description, int descriptionColorId, int iconId) {
+        MenuElementData(String title, String description, int descriptionColorId, int iconId) {
             this(title, description, iconId);
             this.descriptionColorId = descriptionColorId;
         }
@@ -127,18 +128,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         RecyclerView = findViewById(R.id.recycler_view);
-        GridLayoutManager customGL = new GridLayoutManager(this, 2);
-        customGL.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+        GridLayoutManager newGridLayout = new GridLayoutManager(this, 2);
+        newGridLayout.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (customGL.findViewByPosition(position).getItem) {
+                if (RecyclerView.getAdapter().getItemViewType(position) == Adapter.SQUARE_ITEM) {
                     return 1;
                 } else {
                     return 2;
                 }
             }
         });
-        RecyclerView.setLayoutManager(customGL);
-        RecyclerView.setAdapter(new Adapter(menu_Items));
+        RecyclerView.setLayoutManager(newGridLayout);
+        RecyclerView.setAdapter(new Adapter(menu_Items, new Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(MenuElementData item) {
+                Snackbar.make(findViewById(R.id.activity_main),item.getTitle(),Snackbar.LENGTH_SHORT).show();
+            }
+        }));
     }
 }

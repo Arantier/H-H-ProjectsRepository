@@ -17,9 +17,13 @@ public class Activity5 extends AppCompatActivity {
             public void onClick(View view) {
                 TextInputEditText textField = findViewById(R.id.TextInput);
                 String message = textField.getText().toString();
-                Intent intent = new Intent();
-                intent.putExtra("message",message);
-                setResult(RESULT_OK,intent);
+                if (!message.isEmpty()) {
+                    Intent intent = new Intent();
+                    intent.putExtra("message", message);
+                    setResult(RESULT_OK, intent);
+                } else {
+                    setResult(RESULT_CANCELED);
+                }
                 finish();
             }
         });

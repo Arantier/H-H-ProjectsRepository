@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">SixthApp</string>
+    <!--
+    Элементы тулбара
+    -->
+    <string name="toolbar_search">Поиск</string>
+    <string name="toolbar_option1">Пункт 1</string>
+    <string name="toolbar_option2">Пункт 2</string>
+    <string name="toolbar_option3">Пункт 3</string>
+    <!--
+    Меню слева
+    -->
+    <string name="drawer_item1">Item 1</string>
+    <string name="drawer_item2">Item 2</string>
+    <string name="drawer_item3">Item 3</string>
+    <!--
+    Названия фрагментов
+    -->
+    <string name="fragment1">Фрагмент 1</string>
+    <string name="fragment2">Фрагмент 2</string>
+    <string name="fragment3">Фрагмент 3</string>
+    <!--
+    Названия подпунктов на дне
+    -->
+    <string name="bottom_item1">Item one</string>
+    <string name="bottom_item2">Item two</string>
+    <string name="bottom_item3">Item three</string>
+    <!--
+    Баннеры
+    -->
+    <string name="showBanner">Показать баннер</string>
+    <string name="collapseBanner">Свернуть баннер</string>
+    <string name="banner1">Картинка 1</string>
+    <string name="banner2">Картинка 2</string>
+    <string name="banner3">Картинка 3</string>
 </resources>

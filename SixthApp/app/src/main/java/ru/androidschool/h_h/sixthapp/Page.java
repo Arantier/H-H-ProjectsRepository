@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Page extends Fragment {
 
@@ -45,7 +46,7 @@ public class Page extends Fragment {
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                asdfasfa
+                Toast.makeText(getContext(),((TextView)getView().findViewById(R.id.text_pageTitle)).getText().toString(),Toast.LENGTH_SHORT).show();
             }
         });
         return page;

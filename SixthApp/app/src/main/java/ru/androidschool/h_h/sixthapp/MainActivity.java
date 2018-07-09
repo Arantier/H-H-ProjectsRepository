@@ -18,9 +18,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    protected Fragment1 fragment1;
-    protected Fragment2 fragment2;
-    protected Fragment3 fragment3;
+    private Fragment1 fragment1;
+    private Fragment2 fragment2;
+    private Fragment3 fragment3;
 
     class OnClickShowTitleToast implements MenuItem.OnMenuItemClickListener {
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    protected void makeToolbar(){
+    private void makeToolbar(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_black);
         toolbar.setTitle(R.string.bottom_item1);
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         toolbarMenu.findItem(R.id.toolbar_menu_option3).setOnMenuItemClickListener(new OnClickShowTitleToast());
     }
 
-    protected void makeNavigationView(){
+    private void makeNavigationView(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
         NavigationView navView = findViewById(R.id.navView);
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    protected void makeBottom(){
+    private void makeBottom(){
         BottomNavigationView bottom = findViewById(R.id.bottom_navView);
         bottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    protected void attachFragments(){
+    private void attachFragments(){
         fragment1 = new Fragment1();
         fragment2 = new Fragment2();
         fragment3 = new Fragment3();

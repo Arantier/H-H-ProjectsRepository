@@ -16,17 +16,21 @@ public class Fragment3 extends Fragment {
 
     private Banner banner;
 
+    public static Fragment3 newInstance() {
+        return new Fragment3();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        banner = new Banner();
-        View bannerView = inflater.inflate(R.layout.fragment3, null);
+        banner = Banner.newInstance();
+        View bannerView = inflater.inflate(R.layout.fragment3, container, false);
         ToggleButton bannerTrigger = bannerView.findViewById(R.id.button_controlBanner);
         bannerTrigger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                if (b){
+                if (b) {
                     transaction.add(R.id.layout_viewPagerContainer, banner);
                 } else {
                     transaction.remove(banner);

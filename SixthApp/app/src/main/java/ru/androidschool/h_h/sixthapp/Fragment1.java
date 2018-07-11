@@ -11,12 +11,14 @@ public class Fragment1 extends Fragment {
 
     public static final String TAG = "fragment1";
 
+    public static Fragment1 newInstance(){
+        return new Fragment1();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Вижу что ругается, не понимаю как это исправить. Если подсунуть вместо рута, логично, container, то вылетает
-        //oшибка, мол, контейнер уже имеет чайлда
-        return inflater.inflate(R.layout.fragment1, null);
+        return inflater.inflate(R.layout.fragment1, container, false);
     }
 
 }

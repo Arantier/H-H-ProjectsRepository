@@ -15,6 +15,10 @@ public class Banner extends Fragment {
 
     private static final int PAGE_COUNT = 3;
 
+    public static Banner newInstance(){
+        return new Banner();
+    }
+
     class MyAdapter extends FragmentPagerAdapter {
 
         MyAdapter(FragmentManager fm) {
@@ -23,7 +27,15 @@ public class Banner extends Fragment {
 
         @Override
         public Fragment getItem(int i) {
-            return Page.newInstance(i);
+            switch (i) {
+                case 0:
+                    return Page.newInstance(R.drawable.img_1,"Картинка 1");
+                case 1:
+                    return Page.newInstance(R.drawable.img_2,"Картинка 2");
+                case 2:
+                    return Page.newInstance(R.drawable.img_3,"Картинка 3");
+            }
+            return null;
         }
 
         @Override
@@ -35,7 +47,7 @@ public class Banner extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View banner = inflater.inflate(R.layout.fragment_viewpager, null);
+        View banner = inflater.inflate(R.layout.fragment_viewpager, container,false);
         ViewPager viewPager = banner.findViewById(R.id.viewPager);
         MyAdapter adapter = new MyAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);

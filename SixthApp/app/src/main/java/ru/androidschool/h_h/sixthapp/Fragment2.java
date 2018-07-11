@@ -11,9 +11,13 @@ public class Fragment2 extends Fragment {
 
     public static final String TAG = "fragment2";
 
+    public static Fragment2 newInstance(){
+        return new Fragment2();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment2, null);
+        return inflater.inflate(R.layout.fragment2, container,false);
     }
 }

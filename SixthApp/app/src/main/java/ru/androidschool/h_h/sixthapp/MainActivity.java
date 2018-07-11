@@ -18,6 +18,10 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
+    NavigationView navView;
+    BottomNavigationView bottom;
+
     private Fragment1 fragment1;
     private Fragment2 fragment2;
     private Fragment3 fragment3;
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeToolbar(){
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_black);
         toolbar.setTitle(R.string.bottom_item1);
         toolbar.inflateMenu(R.menu.menu_toolbar);
@@ -45,9 +49,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeNavigationView(){
-        Toolbar toolbar = findViewById(R.id.toolbar);
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
-        NavigationView navView = findViewById(R.id.navView);
+        navView = findViewById(R.id.navView);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeBottom(){
-        BottomNavigationView bottom = findViewById(R.id.bottom_navView);
+        bottom = findViewById(R.id.bottom_navView);
         bottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -111,12 +114,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void attachFragments(){
-        fragment1 = new Fragment1();
-        fragment2 = new Fragment2();
-        fragment3 = new Fragment3();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.layout_fragmentContainer,fragment1,Fragment1.TAG)
-                .commit();
+        fragment1 = Fragment1.newInstance();
+        fragment2 = Fragment2.newInstance();
+        fragment3 = Fragment3.newInstance();
+        bottom.setSelectedItemId(R.id.bottom_fragment1);
     }
 
     @Override

@@ -1,0 +1,189 @@
+{
+	"meta": {
+		"limit": 20,
+		"next": null,
+		"offset": 0,
+		"previous": null,
+		"total_count": 9
+	},
+	"objects": [{
+			"description": "Длина: 906 метров<br> Ширина: 35 метров<p>  <b>Название</b><br> Рабочее название моста было Старо-Невский. Но, когда мост был практически готов, его переименовали в честь новгородского князя Александра Невского. Это случилось  15 мая 1965 года.<p>  <b>Факты</b><br> Соединяет южную и северную части города.<p>  Был самым длинным мостом в городе до того, как в 2004 году открыли Большой Обуховский мост.<p>  Мост семипролетный, центральный пролет длиной 50 метров — разводной. Пять пролетов расположены над зеркалом реки, а два крайних — над набережными.<p>  В конструкции моста использовали стальные тросы диаметром 70 мм. Они стягивают отдельные части моста. Натяжение тросов регулируется в зависимости от температуры воздуха. В холодную погоду натяжение ослабляется, при высокой температуре ванты дополнительно натягиваются.<p>",
+			"description_eng": "The bridge was built from 1960 to 1965 and it named after the legendary Russian military commander and politician Alexander Nevsky. The bridge connects Alexander Nevsky Square and Zanevsky prospect thus linking the southern and the northern parts of the city.The newly opened bridge named after the Alexander Nevsky Monastery (Lavra) serves as a part of convenient express motorway, where the traffic is arranged on 2 levels – on the embankments under the bridge and on the bridge itself. Impressing with its dimensions (spans of 110 and 123,5 meters, the beams of 5 000 tones each, the central 50 meters long drawing span), the bridge was also unique for its technical innovations: iron-concrete support shells, improved beam span support, hydraulically driven mechanism of drawing were firstly used in construction of Alexander Nevsky Bridge by the team of leading architects and engineers of Lengiprotransmost Design Institute.  Until 2004, when the Big Obukhovsky Bridge was built, the Alexander Nevsky bridge was the longest bridge across the Neva River in Saint Petersburg. Its length is 905.7 meters, and it is 35 meters wide. Designed by the group of architects - A. Zhuk, S. Mayofis and Y. Sinitsa - the bridge has complemented the look of adjacent buildings in surrounding area. The project was led by a team of engineers of the \"Lengiprotransmost\" institute. Proof-testing was done by means of a column of army tanks and on November 5, 1965 the bridge was open for traffic.",
+			"divorces": [{
+					"end": "05:10:00",
+					"id": 14,
+					"start": "02:20:00"
+				}
+			],
+			"id": 2,
+			"lat": 59.925602,
+			"lng": 30.395119,
+			"name": "Мост Александра Невского",
+			"name_eng": "Alexander Nevsky Bridge",
+			"photo_close": "photos/Alexandra_Nevskogo_open.png",
+			"photo_open": "photos/Alexandra_Nevskogo_closed.png",
+			"public": true,
+			"resource_uri": "/api/v1/bridges/2/"
+		}, {
+			"description": "Длина: 239 метров<br> Ширина: 27 метров<p>  <b>Название</b><br> Первый деревянный мост был построен здесь  в 1894 году. Предлагалось назвать его именем Петра Великого. Но Городская дума решила, что малый мост на соответствует величию императора.<p> С 1922 по 1989 годы назывался мостом Строителей.<p>  <b>Факты</b><br> Современный мост построен в 1957—1960 годах инженерами Владимиром Демченко и Борисом Левиным по проекту архитекторов Льва Носкова и Петра Арешева.<p>  Мост украшают чугунные решётки с трезубцем Нептуна.<p>  Проект моста был составлен и одобрен ещё в 1940 году, но его постройке помешала Великая Отечественная война.<p>  Одновременно с созданием Биржевого моста перепланировке подверглись набережная Макарова и Мытнинская набережная. Из-за этого Стрелка приобрела ярко выраженную ось симметрии.<p>  Новому мосту авторы придали внешние формы, подобные Дворцовому. Чтобы приблизить длину моста к длине Дворцового, засыпали мелководье у правого берега Малой Невы. На засыпанном участке создали обширную предмостную площадь.<p>",
+			"description_eng": "Also known as Exchange Bridge. First bridge was built here in 1894 from the wood. It supposed to be named after Peter the Great, but the City Duma decided that bridge is too small in size to be named after such a great emperor. From 1922 till 1989 renamed to Builders Bridge. Crossing the mouth of the Malaya Neva River between Vasilevsky Island and Mytninskaya Embankment on the Petrograd Side, the Exchange Bridge, which takes its name from the nearby Stock Exchange Building - \"birzha\" in Russian - was built between 1957 and 1960, but designed to match the much older Palace Bridge on the other side of the Vasilevsky Island Spit. The five-span steel bridge rests on granite-faced piers of reinforced concrete, and the bridges simple but elegant decorations include cast iron railings featuring nautical decorations. Its length is 239 meters, and wide is 27 meters.",
+			"divorces": [{
+					"end": "04:55:00",
+					"id": 15,
+					"start": "02:00:00"
+				}
+			],
+			"id": 3,
+			"lat": 59.946383,
+			"lng": 30.303394,
+			"name": "Биржевой мост",
+			"name_eng": "Birzhevoy Bridge",
+			"photo_close": "photos/Birzhevoy_open.png",
+			"photo_open": "photos/Birzhevoy_closed.png",
+			"public": true,
+			"resource_uri": "/api/v1/bridges/3/"
+		}, {
+			"description": "Длина: 331 метров<br> Ширина: 37 метров<p>  <b>Название</b><br> Мост, построенный в 1843—1850 годах, сперва носил проектное название Невского моста. Позже он был переименован в Благовещенский. После смерти императора Николая I мост получил имя Николаевского, а в 1918 году был переименован в Мост имени лейтенанта Шмидта.<p>  <b>Факты</b><br> Проект был разработан польским инженером Станиславом Кербедзом, а декоративная часть — известным русским художником Александром Брюлловым.<p>   По легенде, Николай I обещал Кербедзу повышать звание за каждый пролет, отчего инженер быстро пересмотрел проект и увеличил число пролетов.<p>  Кербедз действительно получил генеральский чин после завершения строительства. Однако когда инженер начинал строить мост, он уже был в звании подполковника.<p>  В конце XIX века фонари с Николаевского моста перенесли к зданию Главного штаба и Летнему саду. В настоящее время они находятся на Марсовом поле.<p>  Перильное ограждение — самая высокохудожественная часть моста. Поскольку мост пересек Неву неподалеку от выхода в залив, в композицию перил ввели тему морской стихии. В каждой секции изображен трезубец, к которому обращены фантастические морские коньки.<p>  Реконструкция моста проводилась дважды: в 1939 и в 2007 годах. На время второй реконструкции был построен мост-дублер. Он получил неофициальное название Сын лейтенанта Шмидта.<p>",
+			"description_eng": "The bridge was built in 1843-1850.  is the first permanent bridge built across the Neva River in Saint Petersburg, Russia. It connects Vasilievsky Island and the central part of the city. The bridge was built in 1843-1850. It was designed by Stanisław Kierbedź, a Polish engineer working in Russia. The architect Alexander Brullov participated in the decoration. The design was a cast iron bridge with twin parallel swing sections at its northern end. At the time, it was the longest bridge in Europe. According to the legend, the Russian Tsar, Nicholas I promised to Kierbedź to give him a promotion for every completed span. After the bridge was completed with eight spans total in it, Kierbedź was promoted to the rank of General, but actually when he started the construction he already had a rank of Podpolkovnik (i.e. lieutenant colonel). The original name of the bridge was Nevsky Bridge. It was later renamed Blagoveshchensky Bridge. After the death of Tsar Nicholas I, it was named Nikolaevsky Bridge in his honor, and in 1918, after the Revolution of 1905, it was renamed again for Lieutenant Schmidt. Bridge was designed by Stanisław Kierbedź, a Polish engineer working in Russia. Famous Russian artist and architect Alexander Brullov participated in the decoration.  Bridge was reconstructed twice: in 1939 and in 2007. In 2007 instead of the main bridge was built an alternate bridge, which people called “lieutenant Schmidt’s son”.    ",
+			"divorces": [{
+					"end": "02:45:00",
+					"id": 16,
+					"start": "01:25:00"
+				}, {
+					"end": "05:00:00",
+					"id": 17,
+					"start": "03:10:00"
+				}
+			],
+			"id": 4,
+			"lat": 59.934692,
+			"lng": 30.289568,
+			"name": "Благовещенский мост",
+			"name_eng": "Blagoveshchensky Bridge",
+			"photo_close": "photos/Blagoveschensky_open.png",
+			"photo_open": "photos/Blagoveschensky_closed.png",
+			"public": true,
+			"resource_uri": "/api/v1/bridges/4/"
+		}, {
+			"description": "Длина: 334 метров<br> Ширина: 23 метров<p>  Идея строительства моста близ устья реки Охты появилась еще в 1829 году. Он был совершенно необходим для развития и индустриализации Охтинского региона.<p>  Николай I утвердил проект возведения моста как важную часть стратегического плана развития города. Тем не менее, на тот момент проект не был финансирован.<p>  В следующий раз вопрос о мосте был поднят в 1860 годы, когда император принял решение о присоединении Охтинского региона к Санкт-Петербургу.<p>  Мост был выполнен настолько качественно, что первые ремонтные работы ему потребовались только в 1971 году.<p>",
+			"description_eng": "The initial idea to build a bridge near the Okhta river was circulated in 1829. Even before the Saint Petersburg was founded, there were settlements in the Okhta region, and with the growth of the city, it quickly grew to become big industrial center. The bridge was essential for the developing industry, and Nicholas I approved the bridge as part of strategic city development plan. However, at that time the necessary funds were not found. Next time the possibility of building a bridge was raised in 1860-th, when the Emperor approved the decision to join the Okhta district to Saint Petersburg. The city Duma organized international contest. There were total of 16 projects submitted including projects from France, Germany, Austria, Spain and USA. There also were three projects submitted out of contest. And one of these out of contest projects was declared winner. That was the project by professor of Nikolaevskay engineering academy colonel Krivoshein and military engineer Apyshkov. But even after selecting the winning project, the work didn't start for a long time. Quality of the bridge was so amazing, that renovation was required just in 1971. The bridge features only three spans, the central one can be drawn. The bridge's length is 334 meters, the width is 23 meters.",
+			"divorces": [{
+					"end": "05:00:00",
+					"id": 18,
+					"start": "02:00:00"
+				}
+			],
+			"id": 5,
+			"lat": 59.942678,
+			"lng": 30.400693,
+			"name": "Большеохтинский мост",
+			"name_eng": "Bolsheokhtinsky Bridge",
+			"photo_close": "photos/Bolsheokhtinsky_open.png",
+			"photo_open": "photos/Bolsheokhtinsky_closed.png",
+			"public": true,
+			"resource_uri": "/api/v1/bridges/5/"
+		}, {
+			"description": "Длина: 362 метров<br> Ширина: 36 метров<p>  Мост был построен в 1932—1936 годах. Назван в честь революционного деятеля Владимира Володарского, убитого в районе будущего моста в 1918 году. Постройка моста стала частью перепланировки Ленинграда, которая началась в 1930 годы. Она предусматривала развитие юго-восточной части города и организацию кольцевой транспортной магистрали. Часть магистрали должна была охватить южные районы города и выйти к Финскому заливу.<p>  В 1986 году состояние моста стало аварийным, и он был закрыт на реконструкцию. Она продолжалась до 1993 года.<p>",
+			"description_eng": "The bridge was built in 1932-1936. Named after Marxist revolutionary  V. Volodarsky, an active Bolshevik revolutionary who served as Press Commissar for Petrograd after the Bolshevik Revolution, who was murdered nearby the future bridge in 1918. From 1986 till 1993 bridge was closed for reconstruction. The new development plan of the city, presented in 1930s, which included significant development of the South-East regions and planned road construction, part of which was supposed to go through the south regions and end on the Gulf of Finland caused the high need in the permanent bridge in this place. Volodarsky Bridge was designed by the architect G. Peredery as a triple-span reinforced concrete arched bridge with a two-way driving platform, located underneath the flexible arches, and a double-winged metal drawbridge span that opens up in the middle of the bridge. The actual design of Volodarsky Bridge is simple and clear-cut and is reminiscent of massive Bolshoi Okhtinsky Bridge, which also spans the Neva River further to the north. Critics of the bridge say Volodarsky Bridge's design was a mistake because its massive arches close off the beautiful panorama of the wide Neva River, and the reinforced concrete construction is too massive and awkward and fails to create a harmonious architectural ensemble with surrounding buildings. The bridge length is 362 meters, the width is 36 meters.",
+			"divorces": [{
+					"end": "03:45:00",
+					"id": 19,
+					"start": "02:00:00"
+				}, {
+					"end": "05:45:00",
+					"id": 20,
+					"start": "04:15:00"
+				}
+			],
+			"id": 6,
+			"lat": 59.877805,
+			"lng": 30.453372,
+			"name": "Володарский мост",
+			"name_eng": "Volodarsky Bridge",
+			"photo_close": "photos/Volodarskiy_open.png",
+			"photo_open": "photos/Volodarskiy_closed.png",
+			"public": true,
+			"resource_uri": "/api/v1/bridges/6/"
+		}, {
+			"description": "Длина: 260 метров<br> Ширина: 28 метров<p>  <b>Факты</b><br> Мост соединяет центральную часть города и Васильевский остров.<p>   Масса стальных конструкций моста составляет 7 770 тонн.<p>  Приводы, которые открывают створки моста, состоят из двигателей, огромных шестеренок и тысячетонных противовесов. Механизм работает достаточно надежно, но маленькие инциденты всё же происходят. Так, в октябре 2002 года сломался один из зубцов приводящей шестерни. Подъем моста остановили прямо в середине процесса.<p>  <b>Название</b><br> Свое название мост получил потому, что рядом находится Дворцовая набережная.<p>  С приходом новой власти в 1917 году мост был переименован в Республиканский. В 1944 году ему вернули историческое название.<p>  <b>Контекст</b><br> Разведенный двукрылый центральный пролет Дворцового моста — один из символов города.<p>",
+			"description_eng": "Although it is only a 20th century creation, Palace Bridge is undoubtedly one of the most famous sights of St. Petersburg, and is quite literally unmissable for most visitors to the city, who will find themselves continually using the bridge to move between Palace Square, home to the Winter Palace and the Hermitage Museum, and the numerous historic attractions on Vasilevskiy Island. A year after Russian Revolution 1917, the bridge was renamed Republican, but the original name was restored in 1944. Despite the grandeur and extravagance of the surrounding architecture, Palace Bridge itself is a relatively simple structure, comprising five cast-iron spans resting on granite-clad, packed-rubble piers. Height of the bridge was strictly limited, so as not to obstruct the view of the monuments around. The engine which opens up 700 ton of each bridge flights consists of motors, huge gears (some of which are still the original ones) and thousand ton counterweights. The mechanism works reliably, but sometimes small incidents occur. In October 2002 one of the gear teeth broke off, and consequently, the drawing was halted in the middle, and the ship passage was delayed. The bridge length is 260 meters, the width is 28 meters.   ",
+			"divorces": [{
+					"end": "02:50:00",
+					"id": 21,
+					"start": "01:10:00"
+				}, {
+					"end": "04:55:00",
+					"id": 22,
+					"start": "03:10:00"
+				}
+			],
+			"id": 7,
+			"lat": 59.94118,
+			"lng": 30.308135,
+			"name": "Дворцовый мост",
+			"name_eng": "Palace Bridge",
+			"photo_close": "photos/Dvortsoviy_open.png",
+			"photo_open": "photos/Dvortsoviy_closed.png",
+			"public": true,
+			"resource_uri": "/api/v1/bridges/7/"
+		}, {
+			"description": "Длина: 396 метров<br> Ширина: 34 метров<p>  <b>Факты</b><br> Литейный мост был первым в мире мостом постоянного типа, освещенным электричеством. Вскоре после открытия на нем установили электрические фонари со «свечами» Павла Яблочкова.<p>  Вблизи литейного моста Нева достигает своей максимальной глубины — 24 метра.<p>   <b>Название</b><br> Название моста происходит от Литейного двора, который находился на левом берегу реки.  В 1903 году, в связи с празднованием 200-летия Петербурга, Литейный мост был переименован в Александровский, или Мост императора Александра II.<p>  После революции 1917 года за мостом снова закрепили название Литейный.<p> ",
+			"description_eng": "The bridge is named Liteyny which literally means Foundry after the Liteyny Prospekt and Liteyny district which in turn were named after big foundry which was established on the left bank in 1711. In 1903 the bridge was renamed Aleksandrovsky in name of tzar Alexander II. But this name was never adopted by the public and after the October Revolution in 1917 the original name Liteyny Bridge was restored. At the vicinity of the Liteyny Bridge, the Neva river reaches the maximum depth of 24 meters. Soon after the opening, the bridge was equipped with electrical lights - the invention of Russian inventor Pavel Yablochkov. It was the first bridge to get electrical lighting and for the long time it remained the only one, since the monopoly of gas producers in city opposed it. The bridge's length is 396 meters, the width is 34 meters.",
+			"divorces": [{
+					"end": "04:45:00",
+					"id": 23,
+					"start": "01:40:00"
+				}
+			],
+			"id": 8,
+			"lat": 59.951807,
+			"lng": 30.349377,
+			"name": "Литейный мост",
+			"name_eng": "Liteyny Bridge",
+			"photo_close": "photos/Liteiniy_open.png",
+			"photo_open": "photos/Liteiniy_closed.png",
+			"public": true,
+			"resource_uri": "/api/v1/bridges/8/"
+		}, {
+			"description": "Длина: 582 метров<br> Ширина: 23,6 метров<p>  <b>Факты</b><br> За свою историю мост дважды реконструировался: в 1965—1967 и в 2001—2003 годах.  При въезде на мост со стороны Марсова поля установлены две ростральные колонны-обелиски. Пьедесталы колонн выполнены из розового гранита чистой тески, обелиски — из красного полированного гранита. Обелиски украшены рострами кораблей из бронзы. Они поддерживают круглые светильники. Завершают обелиски фигуры двуглавых орлов с распростертыми крыльями.<p>  Ростры кораблей выполнены по моделям известного эстонского скульптора Амандуса Адамсона. Пьедесталы украшены мемориальными досками, посвященными участникам строительства моста и другим событиям, которые были связаны с сооружением моста.<p>  <b>Название</b><br> Мост назвали Троицким потому, что рядом находились Троицкая площадь и Троицкий собор. Собор разрушили в 1932 году.<p>  В октябре 1918 года мост переименовали в мост Равенства. После гибели Сергея Кирова 15 декабря 1934 года мост еще раз переименовали — в Кировский мост. Название просуществовало до 4 октября 1991 года, а после мост снова стал Троицким.<p>",
+			"description_eng": "The bridge takes its name from the Old Trinity Cathedral which used to stand at its northern end. In the 20th century it was known as Equality Bridge and Kirovsky Bridge. In 1934 the original name Trinity Bridge was restored.      The bridge was reconstructed twice: in 1956-1967 (the bascule span was rebuilt as a one-winged) and in 2001-2003.    Originally the bridge had nine spans. Five of these were permanent metallic riveted spans, with novel console-arch-beam systems and gradually increasing span length from banks to the middle of the river. A three-arch granite viaduct linked the metallic central section to the right bank, and a two-winged bascule span joined it to the left bank. The design of the central spans, in which single uncut girders bridge more than one span, significantly relieves the stress on the central part of the arches, decreasing the support required in the river and giving the span structures a gentle arch shape. The bridge is decorated with cast iron gratings with artistic casting, granite pylons with lanterns and metallic three-colour lanterns in the Art Nouveau style.The bridge's length is 582 meters, the width is 23,6 meters.   ",
+			"divorces": [{
+					"end": "04:50:00",
+					"id": 24,
+					"start": "01:20:00"
+				}
+			],
+			"id": 9,
+			"lat": 59.949148,
+			"lng": 30.327179,
+			"name": "Троицкий мост",
+			"name_eng": "Trinity Bridge",
+			"photo_close": "photos/Troitsky_open.png",
+			"photo_open": "photos/Troitsky_closed.png",
+			"public": true,
+			"resource_uri": "/api/v1/bridges/9/"
+		}, {
+			"description": "Длина: 226 метров<br> Ширина: 36 метров<p>  <b>Факты</b><br> Первый мост на этом месте был построен в 1758 году в створе Малого проспекта Васильевского острова. Этот мост был деревянным.<p>  В 1833—1835 годах мост был перестроен. Строительство велось Компанией, в которую входили четыре купца. За эту работу они получили «в вечное и потомственное содержание» несколько мостов в Санкт-Петербурге. Возглавлял Компанию лесопромышленник Авраам Тучков, владелец складов древесины.<p>  В 1870 году мост сгорел от непотушенной папиросы. Затем был восстановлен.<p>  <b>Название</b><br> Существует версия, что мост носит имя инженера Алексея Тучкова, который внес большой вклад в его строительство.<p>  В советское время Тучков мост собирались переименовать. Но в правительственных кругах пустили слух,  что переправа на самом деле названа в честь одного из героев войны 1812 года. Благодаря этому название моста оставили.<p>   <b>Контекст</b><br> Аркадий Свидригайлов, персонаж «Преступления и наказания» Достоевского, проводит последнюю ночь своей жизни, глядя на течение Малой Невы с Тучкова моста.<p>  В честь Тучкова моста назван танкер «Тучков мост», спущенный на воду 5 декабря 2003 года.",
+			"description_eng": "This bridge is a major city north-south link. There are  two versions where did the name of the bridge came from: the bridge named after the famous merchant Avraam Tuchkov, or after the engineer, who have built the bridge in 18th century–A.V. Tuchkov. Tuchkov Bridge crosses the Malaya Neva River from the Petrograd Side, between the Yubileiniy Palace of Sport and the Petrovskiy Stadium, to the First Line of Vasilevskiy Island. A modern, three-span steel bridge on granite-clad, reinforced-concrete piers, Tuchkov Bridge mimics Palace Bridge in design, with its symmetrical opening central span and lack of obvious ornament. In fact, despite its central location, Tuchkov Bridge is one of the least decorative in the city. In 1870 unquenched cigarette caused the fire and bridge was burned.    Arkady Svidrigailov, the character from Dostoevsky's novel Crime and Punishment, spends the last night of his life looking into water of Malaya Neva from Tuchkov bridge. Its length is 226 meters and its width is 36 meters.  ",
+			"divorces": [{
+					"end": "02:55:00",
+					"id": 25,
+					"start": "02:00:00"
+				}, {
+					"end": "04:55:00",
+					"id": 26,
+					"start": "03:35:00"
+				}
+			],
+			"id": 10,
+			"lat": 59.949237,
+			"lng": 30.2856,
+			"name": "Тучков мост",
+			"name_eng": "Tuchkov Bridge",
+			"photo_close": "photos/Tuchkov_open.png",
+			"photo_open": "photos/Tuchkov_closed_1.png",
+			"public": true,
+			"resource_uri": "/api/v1/bridges/10/"
+		}
+	]
+}

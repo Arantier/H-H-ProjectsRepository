@@ -9,11 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+import ru.android_school.h_h.sevenapp.support_classes.Bridge;
+import ru.android_school.h_h.sevenapp.support_classes.TimeInterval;
+
+class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     public static final String TAG = "list_bridges";
 
@@ -43,48 +44,43 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         }
 
         public void bind(Bridge bridge, OnItemClickListener listener) {
-            bridgeId = bridge.id;
-            bridgeName.setText(bridge.name);
-            int state = 0;
+            bridgeId = bridge.getId();
+            bridgeName.setText(bridge.getName());
             //TODO: Замени дефис на тире
             String formattedTime="";
-            for (TimeInterval i : bridge.bridgeIntervals){
-                formattedTime+=i+"\t";
-                int newState = i.whatPosition(new Date());
-                if (state<newState){
-                    state = newState;
-                }
+            for (TimeInterval interval : bridge.bridgeIntervals){
+                formattedTime+=interval+"\t";
             }
-            switch (state){
-                case (TimeInterval.BRIDGE_CONNECTED):
+            switch (bridge.currentBridgeState()){
+                case (Bridge.BRIDGE_CONNECTED):
                     bridgeState.setImageResource(R.drawable.ic_bridge_normal);
                     break;
-                case (TimeInterval.BRIDGE_SOON):
+                case (Bridge.BRIDGE_SOON):
                     bridgeState.setImageResource(R.drawable.ic_bridge_soon);
                     break;
-                case (TimeInterval.BRIDGE_RAISED):
+                case (Bridge.BRIDGE_RAISED):
                     bridgeState.setImageResource(R.drawable.ic_bridge_late);
                     break;
             }
             bridgeTime.setText(formattedTime);
-            bridgeReminder.setImageResource((bridge.isSubscribed ? R.drawable.ic_bell_on : R.drawable.ic_bell_off));
+            bridgeReminder.setImageResource(((bridge.timeToRemindInMinutes!=Bridge.NO_REMIND) ? R.drawable.ic_bell_on : R.drawable.ic_bell_off));
             view.setOnClickListener(AnonListener -> listener.onItemClick(bridge));
         }
     }
 
     @NonNull
     @Override
-    public ListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         Log.i(TAG,"list item was created");
         return new ViewHolder(LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.bridge_item,viewGroup,false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder viewHolder, int i) {
         Bridge bridge = listOfBridges.get(i);
         viewHolder.bind(bridge, onItemClickListener);
-        Log.i(TAG,"Bridge "+bridge.name+" has been binded");
+        Log.i(TAG,"Bridge "+ bridge.getName() +" has been binded");
     }
 
     @Override
@@ -92,7 +88,7 @@ class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return listOfBridges.size();
     }
 
-    public ListAdapter(List<Bridge> listOfBridges, OnItemClickListener onItemClickListener) {
+    public RecyclerViewAdapter(List<Bridge> listOfBridges, OnItemClickListener onItemClickListener) {
         this.listOfBridges = listOfBridges;
         this.onItemClickListener = onItemClickListener;
         Log.i(TAG,"Adapter has been created");

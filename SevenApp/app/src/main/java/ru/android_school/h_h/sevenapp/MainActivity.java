@@ -35,12 +35,6 @@ import ru.android_school.h_h.sevenapp.support_classes.Bridge;
 public class MainActivity extends AppCompatActivity implements ErrorFragment.Refreshable{
 
     Toolbar toolbar;
-    ListFragment list;
-    LoadFragment load;
-    ErrorFragment error;
-    MapFragment map;
-
-    List<Bridge> receivedBridges;
 
     public static final String TAG = "MainActivity";
 
@@ -98,11 +92,10 @@ public class MainActivity extends AppCompatActivity implements ErrorFragment.Ref
             switchMapButton(false);
         });
         blockMapButton(true);
-        load = LoadFragment.newInstance();
+        LoadFragment load = LoadFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainer, load)
                 .commit();
-        //Настрой говно
         Disposable disposable = Observable.create((ObservableOnSubscribe<ArrayList<Bridge>>) emitter -> {
             Gson bridgeGson = new GsonBuilder()
                     .registerTypeHierarchyAdapter(List.class, new BridgeJSONAdapter())

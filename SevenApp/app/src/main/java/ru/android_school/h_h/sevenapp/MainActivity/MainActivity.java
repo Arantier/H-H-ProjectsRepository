@@ -1,28 +1,21 @@
-package ru.android_school.h_h.sevenapp;
+package ru.android_school.h_h.sevenapp.MainActivity;
 
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Cancellable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +23,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import ru.android_school.h_h.sevenapp.support_classes.Bridge;
+import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
+import ru.android_school.h_h.sevenapp.R;
 
 public class MainActivity extends AppCompatActivity implements ErrorFragment.Refreshable{
 
@@ -112,36 +106,36 @@ public class MainActivity extends AppCompatActivity implements ErrorFragment.Ref
                         @Override
                         public void onResponse(Call<ArrayList<Bridge>> call, Response<ArrayList<Bridge>> response) {
                             if (response.body()!=null) {
+                                Log.i("rxJava","Responce correct");
                                 emitter.onNext(response.body());
                                 emitter.onComplete();
                             } else {
-                                Log.i("rxJava","Body is null");
-                                emitter.onNext(new ArrayList<>());
+                                Log.i("rxJava","Responce incorrect");
+                                emitter.onError(new Throwable("Error: responce is incorrect"));
                             }
                         }
 
                         @Override
                         public void onFailure(Call<ArrayList<Bridge>> call, Throwable t) {
+                            Log.i("rxJava","Responce failed:"+t);
                             emitter.onError(t);
                         }
                     });
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(receivedList -> {
-            if (receivedList.size() != 0) {
-                ListFragment list = ListFragment.newInstance(receivedList);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainer, list)
-                        .commit();
-                blockMapButton(false);
-            } else {
-                ErrorFragment error = ErrorFragment.newInstance();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainer, error)
-                        .commit();
-                blockMapButton(true);
-            }
-        });
+                .subscribe(receivedList ->{
+                    ListFragment list = ListFragment.newInstance(receivedList);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentContainer, list)
+                            .commit();
+                    blockMapButton(false);
+                }, error ->{
+                    ErrorFragment errFragment = ErrorFragment.newInstance();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentContainer, errFragment)
+                            .commit();
+                    blockMapButton(true);
+                });
     }
 }

@@ -1,4 +1,4 @@
-package ru.android_school.h_h.sevenapp;
+package ru.android_school.h_h.sevenapp.MainActivity;
 
 import android.support.v4.app.Fragment;
 

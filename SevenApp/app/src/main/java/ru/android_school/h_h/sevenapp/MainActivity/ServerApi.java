@@ -1,12 +1,11 @@
-package ru.android_school.h_h.sevenapp;
+package ru.android_school.h_h.sevenapp.MainActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import ru.android_school.h_h.sevenapp.support_classes.Bridge;
+import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
 
 public interface ServerApi {
 

@@ -9,7 +9,7 @@
         android:id="@+id/bridgeItemIncluded"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/bridge_item"/>
+        layout="@layout/bridge_bar"/>
 
     <TextView
         android:id="@+id/bridgeDescription"

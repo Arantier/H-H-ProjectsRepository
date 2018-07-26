@@ -1,4 +1,4 @@
-package ru.android_school.h_h.sevenapp;
+package ru.android_school.h_h.sevenapp.MainActivity;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +11,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ru.android_school.h_h.sevenapp.support_classes.Bridge;
-import ru.android_school.h_h.sevenapp.support_classes.TimeInterval;
+import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
+import ru.android_school.h_h.sevenapp.BridgeClasses.BridgeManager;
+import ru.android_school.h_h.sevenapp.R;
 
 class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
@@ -44,26 +45,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
         }
 
         public void bind(Bridge bridge, OnItemClickListener listener) {
-            bridgeId = bridge.getId();
-            bridgeName.setText(bridge.getName());
-            //TODO: Замени дефис на тире
-            String formattedTime="";
-            for (TimeInterval interval : bridge.bridgeIntervals){
-                formattedTime+=interval+"\t";
-            }
-            switch (bridge.currentBridgeState()){
-                case (Bridge.BRIDGE_CONNECTED):
-                    bridgeState.setImageResource(R.drawable.ic_bridge_normal);
-                    break;
-                case (Bridge.BRIDGE_SOON):
-                    bridgeState.setImageResource(R.drawable.ic_bridge_soon);
-                    break;
-                case (Bridge.BRIDGE_RAISED):
-                    bridgeState.setImageResource(R.drawable.ic_bridge_late);
-                    break;
-            }
-            bridgeTime.setText(formattedTime);
-            bridgeReminder.setImageResource(((bridge.timeToRemindInMinutes!=Bridge.NO_REMIND) ? R.drawable.ic_bell_on : R.drawable.ic_bell_off));
+            new BridgeManager(bridge).makeBridgeBar(view);
             view.setOnClickListener(AnonListener -> listener.onItemClick(bridge));
         }
     }
@@ -73,7 +55,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         Log.i(TAG,"list item was created");
         return new ViewHolder(LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.bridge_item,viewGroup,false));
+                .inflate(R.layout.bridge_bar,viewGroup,false));
     }
 
     @Override
@@ -85,7 +67,11 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewH
 
     @Override
     public int getItemCount() {
-        return listOfBridges.size();
+        if (listOfBridges!=null) {
+            return listOfBridges.size();
+        } else {
+            return -1;
+        }
     }
 
     public RecyclerViewAdapter(List<Bridge> listOfBridges, OnItemClickListener onItemClickListener) {

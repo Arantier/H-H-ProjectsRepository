@@ -6,6 +6,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:colorForeground">@color/foreground_material_light</item>
+        <item name="colorWhite">@color/white</item>
+        <item name="colorBlack">@color/black</item>
     </style>
 
     <style name="AppTheme.ActionBar.Transparent" parent="AppTheme">

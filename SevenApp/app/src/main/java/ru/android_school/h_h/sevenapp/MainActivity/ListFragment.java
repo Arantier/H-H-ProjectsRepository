@@ -1,4 +1,4 @@
-package ru.android_school.h_h.sevenapp;
+package ru.android_school.h_h.sevenapp.MainActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
-import ru.android_school.h_h.sevenapp.support_classes.Bridge;
+
+import ru.android_school.h_h.sevenapp.BridgePage.BridgePage;
+import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
+import ru.android_school.h_h.sevenapp.R;
 
 public class ListFragment extends Fragment {
 
@@ -26,7 +29,7 @@ public class ListFragment extends Fragment {
     public void launchBridgeInfo(Bridge bridge) {
         Intent intent = new Intent(getContext(), BridgePage.class);
         intent.putExtra(BridgePage.BRIDGE_TAG, bridge);
-        startActivityForResult(intent, BridgePage.RESULT_KEY);
+        startActivity(intent);
     }
 
     @Nullable

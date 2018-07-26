@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BridgePage"
+            android:name=".BridgePage.BridgePage"
             android:theme="@style/AppTheme.ActionBar.Transparent" />
 
         <receiver
-            android:name=".NotificationReceiver"
+            android:name=".BridgePage.NotificationReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
     </application>

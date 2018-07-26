@@ -1,11 +1,10 @@
-package ru.android_school.h_h.sevenapp.support_classes;
+package ru.android_school.h_h.sevenapp.BridgeClasses;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.regex.Pattern;
 
 public class TimeInterval implements Parcelable {
@@ -19,6 +18,11 @@ public class TimeInterval implements Parcelable {
     public static final int INSIDE_INTERVAL = 2;
     public static final int LESSER_THAN_HOUR = 1;
     public static final int MORE_THAN_HOUR = 0;
+
+    //
+    //Parcelable methods, constructors, etc.
+    //
+    //=========================================
 
     protected TimeInterval(Parcel in) {
         start = in.readString();
@@ -53,11 +57,39 @@ public class TimeInterval implements Parcelable {
         parcel.writeLong(startCalendar.getTimeInMillis());
         parcel.writeLong(endCalendar.getTimeInMillis());
     }
+    //=========================================
 
     public static class TimeIntervalInputException extends Exception {
         public TimeIntervalInputException(String message, String start, String end) {
             super(message + "\nStart interval:" + start + "\nEnd interval:" + end);
         }
+    }
+
+    public TimeInterval(String start, String end) throws TimeIntervalInputException {
+        this.start = start;
+        this.end = end;
+        Pattern pattern = Pattern.compile("^\\d{1,2}:\\d\\d$");
+        if (!pattern.matcher(start).matches() || !pattern.matcher(end).matches()) {
+            throw new TimeIntervalInputException("Error:invalid time format", start, end);
+        }
+        int startHour = Integer.parseInt(start.split(":")[0]);
+        int startMinute = Integer.parseInt(start.split(":")[1]);
+        int endHour = Integer.parseInt(end.split(":")[0]);
+        int endMinute = Integer.parseInt(end.split(":")[1]);
+        startCalendar = Calendar.getInstance();
+        endCalendar = Calendar.getInstance();
+        startCalendar.set(Calendar.HOUR_OF_DAY, startHour);
+        startCalendar.set(Calendar.MINUTE, startMinute);
+        endCalendar.set(Calendar.HOUR_OF_DAY, endHour);
+        endCalendar.set(Calendar.MINUTE, endMinute);
+        update();
+    }
+
+    @Override
+    public String toString() {
+        String result = start + " - " + end;
+        Log.i(TAG, "Current intervals:\nstart:" + startCalendar + " ms;\n" + "end:" + endCalendar + " ms");
+        return result;
     }
 
     public int currentState() {
@@ -84,26 +116,6 @@ public class TimeInterval implements Parcelable {
         return returnValue;
     }
 
-    public TimeInterval(String start, String end) throws TimeIntervalInputException {
-        this.start = start;
-        this.end = end;
-        Pattern pattern = Pattern.compile("^\\d{1,2}:\\d\\d$");
-        if (!pattern.matcher(start).matches() || !pattern.matcher(end).matches()) {
-            throw new TimeIntervalInputException("Error:invalid time format", start, end);
-        }
-        int startHour = Integer.parseInt(start.split(":")[0]);
-        int startMinute = Integer.parseInt(start.split(":")[1]);
-        int endHour = Integer.parseInt(end.split(":")[0]);
-        int endMinute = Integer.parseInt(end.split(":")[1]);
-        startCalendar = Calendar.getInstance();
-        endCalendar = Calendar.getInstance();
-        startCalendar.set(Calendar.HOUR_OF_DAY, startHour);
-        startCalendar.set(Calendar.MINUTE, startMinute);
-        endCalendar.set(Calendar.HOUR_OF_DAY, endHour);
-        endCalendar.set(Calendar.MINUTE, endMinute);
-        update();
-    }
-
     public void update() {
         if (startCalendar.compareTo(endCalendar)<0){
             if (endCalendar.compareTo(Calendar.getInstance())<0){
@@ -117,13 +129,6 @@ public class TimeInterval implements Parcelable {
                 endCalendar.add(Calendar.DATE,1);
             }
         }
-    }
-
-    @Override
-    public String toString() {
-        String result = start + " - " + end;
-        Log.i(TAG, "Current intervals:\nstart:" + startCalendar + " ms;\n" + "end:" + endCalendar + " ms");
-        return result;
     }
 
 }

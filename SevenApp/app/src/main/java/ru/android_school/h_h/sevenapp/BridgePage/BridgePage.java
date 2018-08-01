@@ -1,15 +1,19 @@
 package ru.android_school.h_h.sevenapp.BridgePage;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -109,17 +113,10 @@ public class BridgePage extends AppCompatActivity {
         bridgeManager.makeBridgeBar(bridgeBar);
         bridgeDescription.setText(Html.fromHtml(bridge.getDescription()));
         reminderButton.setOnClickListener(view -> {
-            Log.i("button","Button pressed");
-            String description = "Вы просили напомнить о мосте "+BridgePage.makeMinutesString(0)+" до развода моста";
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.drawable.ic_adb_black_24dp)
-                    .setContentTitle(bridge.getName())
-                    .setContentInfo(description);
-            NotificationManager notificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(1, notificationBuilder.build());
-            /*TimeReminderPicker.newInstance(bridge)
-                    .show(getSupportFragmentManager(), "time");*/
+            Log.i("button", "Button pressed");
+            String description = "Вы просили напомнить о мосте " + BridgePage.makeMinutesString(0) + " до развода моста";
+            TimeReminderPicker.newInstance(bridge)
+                    .show(getSupportFragmentManager(), "time");
         });
     }
 }

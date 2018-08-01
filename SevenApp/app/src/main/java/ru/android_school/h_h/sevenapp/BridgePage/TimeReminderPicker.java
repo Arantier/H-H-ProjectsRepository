@@ -3,15 +3,19 @@ package ru.android_school.h_h.sevenapp.BridgePage;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.NumberPicker;
@@ -41,6 +45,33 @@ public class TimeReminderPicker extends DialogFragment {
 
     TextView title;
 
+    public void createNotification(Bridge bridge, String description) {
+        String TAG = "notification_trouble";
+        NotificationCompat.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.i(TAG, "Нынешняя версия выше 26");
+            String channelId = "" + bridge.getId();
+            NotificationChannel notificationChannel = new NotificationChannel(channelId, bridge.getName(), NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription(description);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(0x3de095);
+            NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(notificationChannel);
+            builder = new NotificationCompat.Builder(getContext(),channelId);
+        } else {
+            Log.i(TAG, "Нынешняя версия ниже 26");
+            builder = new NotificationCompat.Builder(getContext());
+        }
+        Intent intent = new Intent(getContext(),BridgePage.class);
+        intent.putExtra(BridgePage.BRIDGE_TAG,bridge);
+        PendingIntent makeBridgePageIntent = PendingIntent.getActivity(getContext(),bridge.getId(),intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setSmallIcon(R.drawable.ic_adb_black_24dp)
+                .setContentTitle(bridge.getName())
+                .setContentText(description)
+                .setAutoCancel(true)
+                .setContentIntent(makeBridgePageIntent);
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -60,26 +91,12 @@ public class TimeReminderPicker extends DialogFragment {
         Log.i(TAG, "Bridge's name:" + bridge.getName() + "\n");
         builder.setView(dialogView);
         builder.setPositiveButton(R.string.dialogPositive, (positiveListener, i) -> {
-            closestStart.add(Calendar.MINUTE,-selectedTimeInMinutes);
+            closestStart.add(Calendar.MINUTE, -selectedTimeInMinutes);
 //            long time = closestStart.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
-            long time = Calendar.getInstance().getTimeInMillis()+5000;
-            Log.i(TAG,"Время выставлено:"+time+"\nНынешнее время:"+Calendar.getInstance().getTimeInMillis());
-            /*Intent notificationIntent = new Intent(getContext(),NotificationReceiver.class);
-            notificationIntent.putExtra(NotificationReceiver.INTENT_BRIDGE,bridge.getName());
-            notificationIntent.putExtra(NotificationReceiver.INTENT_TIME,selectedTimeInMinutes);*/
-//            PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(),bridge.getId(),notificationIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-            /*AlarmManager alarmManager = ((AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE));
-            alarmManager.set(AlarmManager.RTC,time,pendingIntent);*/
-            String description = "Вы просили напомнить о мосте "+BridgePage.makeMinutesString(selectedTimeInMinutes)+" до развода моста";
-            //Не показывается
-
-            /*NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext())
-                    .setSmallIcon(R.drawable.ic_adb_black_24dp)
-                    .setContentTitle(bridge.getName())
-                    .setContentInfo(description);
-            NotificationManager notificationManager =
-                    (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(1, notificationBuilder.build());*/
+            long time = Calendar.getInstance().getTimeInMillis() + 5000;
+            Log.i(TAG, "Время выставлено:" + time + "\nНынешнее время:" + Calendar.getInstance().getTimeInMillis());
+            String description = "Вы просили напомнить о мосте " + BridgePage.makeMinutesString(selectedTimeInMinutes) + " до развода моста";
+            createNotification(bridge, description);
         }).setNegativeButton(R.string.dialogNegative, (negativeListener, i) -> {
             TimeReminderPicker.this.getDialog().cancel();
         });

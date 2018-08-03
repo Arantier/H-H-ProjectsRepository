@@ -31,6 +31,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         Log.i(LOG_TAG, "intent = " + intent);
         Log.i(LOG_TAG, "time = " + intent.getIntExtra(INTENT_TIME,0));
         Log.i(LOG_TAG, "bridge = " + intent.getParcelableExtra(INTENT_BRIDGE));
+        Log.i(LOG_TAG, "extras = " + intent.getExtras());
     }
 //    @Override
     public void bannedonReceive(Context context, Intent intent) {

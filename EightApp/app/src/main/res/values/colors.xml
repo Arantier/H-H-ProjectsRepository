@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="whiteBack">#FFFFFF</color>
+    <color name="mango">#feb92d</color>
+    <color name="mangoDark">#f99d26</color>
+    <color name="redBack">#e51c23</color>
+    <color name="pinkBack">#e91e63</color>
+    <color name="purpleBack">#9c27b0</color>
+    <color name="deepPurpleBack">#673ab7</color>
+    <color name="blueBack">#5677fc</color>
+    <color name="lightBlueBack">#02a9f4</color>
+    <color name="biruseBlueBack">#00bcd4</color>
+    <color name="seaGreenBack">#009788</color>
+    <color name="greenBack">#8cc34a</color>
+    <color name="grassGreeenBack">#cddc38</color>
+    <color name="yellowBack">#ffeb3c</color>
+    <color name="orangeBack">#fec10a</color>
+    <color name="orangeRedBack">#ff5623</color>
+    <color name="greyBack">#9e9e9e</color>
+    <color name="blueGreyBack">#607d8b</color>
+</resources>

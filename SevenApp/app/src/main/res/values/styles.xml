@@ -3,23 +3,16 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorForeground">@color/white</item>
         <item name="android:fontFamily">sans-serif</item>
-        <!--TODO:ВНимание, заменил цвет с foregroundLight на чёрный-->
-        <item name="android:colorForeground">@color/black</item>
         <item name="colorWhite">@color/white</item>
         <item name="colorBlack">@color/black</item>
     </style>
 
-    <style name="AppTheme.ActionBar.Transparent" parent="AppTheme">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="windowActionBarOverlay">true</item>
-        <item name="android:colorForeground">@color/foreground_material_light</item>
-    </style>
-
     <style name="AppTheme.NumberDialog" parent="AppTheme">
-        <item name="android:colorForeground">@color/foreground_material_dark</item>
-        <item name="android:textColorPrimary">@color/foreground_material_dark</item>
+        <item name="android:colorForeground">@color/black</item>
         <item name="android:windowNoTitle">false</item>
     </style>
 

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity.MainActivity"
-    android:fitsSystemWindows="false">
+    android:fitsSystemWindows="false"
+    android:clipToPadding="false">
 
     <include
         android:id="@+id/include"

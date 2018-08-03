@@ -4,5 +4,7 @@
     <style name="AppTheme.NumberDialog" parent="AppTheme">
         <item name="android:windowNoTitle">false</item>
         <item name="android:colorControlNormal">@color/colorPrimary</item>
+        <item name="android:colorForeground">@color/black</item>
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 </resources>

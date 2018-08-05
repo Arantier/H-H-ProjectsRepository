@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
@@ -24,45 +23,75 @@ public class NotificationReceiver extends BroadcastReceiver {
     private Bridge bridge;
     private int timeToCall;
 
-
-    @Override
-    public void onReceive(Context context, Intent intent){
-        Log.i(LOG_TAG, "onReceive");
-        Log.i(LOG_TAG, "intent = " + intent);
-        Log.i(LOG_TAG, "time = " + intent.getIntExtra(INTENT_TIME,0));
-        Log.i(LOG_TAG, "bridge = " + intent.getParcelableExtra(INTENT_BRIDGE));
-        Log.i(LOG_TAG, "extras = " + intent.getExtras());
-    }
-//    @Override
-    public void bannedonReceive(Context context, Intent intent) {
-        String TAG = "notification_trouble";
+    public void createNotification(Context context) {
         NotificationCompat.Builder builder;
-        bridge = intent.getParcelableExtra(INTENT_BRIDGE);
-        timeToCall = intent.getIntExtra(INTENT_TIME,0);
-        String description = "Вы просили напомнить о мосте " + BridgePage.makeMinutesString(timeToCall) + " до развода моста";
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        String description = "Вы просили напомнить о мосте " + BridgePageActivity.makeMinutesString(timeToCall) + " до развода моста";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Log.i(TAG, "Нынешняя версия выше 26");
+            Log.i(LOG_TAG, "Нынешняя версия выше 26");
             String channelId = "" + bridge.getId();
             NotificationChannel notificationChannel = new NotificationChannel(channelId, bridge.getName(), NotificationManager.IMPORTANCE_DEFAULT);
             notificationChannel.setDescription(description);
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(0x3de095);
             notificationManager.createNotificationChannel(notificationChannel);
-            builder = new NotificationCompat.Builder(context,channelId);
+            builder = new NotificationCompat.Builder(context, channelId);
         } else {
-            Log.i(TAG, "Нынешняя версия ниже 26");
+            Log.i(LOG_TAG, "Нынешняя версия ниже 26");
             builder = new NotificationCompat.Builder(context);
         }
-        Intent makeBridgePageIntent = new Intent(context,BridgePage.class);
-        intent.putExtra(BridgePage.BRIDGE_TAG,bridge);
-        PendingIntent bridgePagePendingIntent = PendingIntent.getActivity(context,bridge.getId(),makeBridgePageIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(context, BridgePageActivity.class);
+        intent.putExtra(BridgePageActivity.BRIDGE_TAG, bridge);
+        PendingIntent makeBridgePageIntent = PendingIntent.getActivity(context, bridge.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = builder.setSmallIcon(R.drawable.ic_adb_black_24dp)
                 .setContentTitle(bridge.getName())
                 .setContentText(description)
                 .setAutoCancel(true)
-                .setContentIntent(bridgePagePendingIntent)
+                .setContentIntent(makeBridgePageIntent)
                 .build();
-        notificationManager.notify(bridge.getId(),notification);
+        notificationManager.notify(bridge.getId(), notification);
     }
+
+    public void createDebugNotification(Context context) {
+        NotificationCompat.Builder builder;
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        String description = "Это отладочная нотификация, которая говорит о том, что принятый интент был сожран Ктулху";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.i(LOG_TAG, "Нынешняя версия выше 26");
+            String channelId = "debug_notification";
+            NotificationChannel notificationChannel = new NotificationChannel(channelId, "Отладочная нотификация", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription(description);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(0xFF0000);
+            notificationManager.createNotificationChannel(notificationChannel);
+            builder = new NotificationCompat.Builder(context, channelId);
+        } else {
+            Log.i(LOG_TAG, "Нынешняя версия ниже 26");
+            builder = new NotificationCompat.Builder(context);
+        }
+        Notification notification = builder.setSmallIcon(R.drawable.ic_adb_black_24dp)
+                .setContentTitle("Отладочная нотификация")
+                .setContentText(description)
+                .setAutoCancel(true)
+                .build();
+        notificationManager.notify(0, notification);
+    }
+
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        timeToCall = intent.getIntExtra(INTENT_TIME, -1);
+        bridge = intent.getParcelableExtra(INTENT_BRIDGE);
+        Log.i(LOG_TAG, "onReceive");
+        Log.i(LOG_TAG, "time = " + timeToCall);
+        Log.i(LOG_TAG, "bridge = " + bridge);
+        if ((timeToCall < 0) || (bridge == null)) {
+            Log.i(LOG_TAG,"Интент принят некорректно");
+            createDebugNotification(context);
+        } else {
+            Log.i(LOG_TAG,"Интент принят корректно");
+            createNotification(context);
+        }
+    }
+
 }

@@ -6,7 +6,8 @@
         <item name="colorPrimary">@color/mango</item>
         <item name="colorPrimaryDark">@color/mangoDark</item>
         <item name="colorAccent">@color/mangoDark</item>
-        <item name="android:colorForeground">@color/whiteBack</item>
+        <item name="android:colorForeground">@color/white</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
 </resources>

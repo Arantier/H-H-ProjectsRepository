@@ -5,5 +5,5 @@
         android:id="@+id/pickColor"
         android:icon="@drawable/ic_color"
         android:title="Pick color"
-        app:showAsAction="ifRoom|always" />
+        app:showAsAction="always" />
 </menu>

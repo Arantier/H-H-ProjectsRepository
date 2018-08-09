@@ -1,4 +1,4 @@
-package ru.androidschool.h_h.eightapp;
+package ru.android_school.h_h.eightapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("ru.androidschool.h_h.eightapp", appContext.getPackageName());
+        assertEquals("ru.android_school.h_h.eightapp", appContext.getPackageName());
     }
 }

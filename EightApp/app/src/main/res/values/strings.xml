@@ -4,4 +4,8 @@
     <string name="decline">Отмена</string>
     <string name="title_placeholder">Название</string>
     <string name="text_placeholder">Текст заметки</string>
+    <string name="loading">Идёт загрузка...</string>
+    <string name="empty">Список заметок пуст. Может стоит исправить это? ;)</string>
+    <string name="delete">Удалить</string>
+    <string name="archive">Заархивировать</string>
 </resources>

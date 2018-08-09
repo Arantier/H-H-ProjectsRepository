@@ -65,7 +65,9 @@ public class TimePickerDialog extends DialogFragment {
             Log.i(TAG, "Время выставлено:" + timeToCall + "\nНынешнее время:" + Calendar.getInstance().getTimeInMillis());
             //В этот интент размещаем данные и пункт назначения
             Log.i(TAG,"Отправляется мост и время:\nВремя"+selectedTimeInMinutes+"\nМост:"+bridge);
-            Intent notificationContentIntent = new Intent(getContext(),NotificationReceiver.class);
+//            Intent notificationContentIntent = new Intent(getContext(),NotificationReceiver.class);
+            Intent notificationContentIntent = new Intent("Boop");
+            notificationContentIntent.setClass(getContext(),NotificationReceiver.class);
             notificationContentIntent.putExtra(NotificationReceiver.INTENT_TIME,selectedTimeInMinutes);
             notificationContentIntent.putExtra(NotificationReceiver.INTENT_BRIDGE,bridge);
             //Этот закрепляем за алярмой

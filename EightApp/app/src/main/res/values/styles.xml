@@ -6,8 +6,15 @@
         <item name="colorPrimary">@color/mango</item>
         <item name="colorPrimaryDark">@color/mangoDark</item>
         <item name="colorAccent">@color/mangoDark</item>
-        <item name="android:colorForeground">@color/white</item>
         <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="AppTheme.Toolbar" parent = "AppTheme">
+        <item name="android:colorForeground">@color/white</item>
+    </style>
+
+    <style name="ProgressDialogTheme" parent="AppTheme">
+        <item name="android:colorForeground">@color/black</item>
     </style>
 
 </resources>

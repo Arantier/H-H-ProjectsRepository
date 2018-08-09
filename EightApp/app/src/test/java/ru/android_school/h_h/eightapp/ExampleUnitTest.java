@@ -1,4 +1,4 @@
-package ru.androidschool.h_h.eightapp;
+package ru.android_school.h_h.eightapp;
 
 import org.junit.Test;
 

@@ -44,6 +44,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         }
 
         public void bind(Note note) {
+            //Проблема с бекграундом
             this.note = note;
             if (!note.title.isEmpty()) {
                 titleView.setText(note.title);
@@ -53,8 +54,12 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
             }
             if (note.backgroundColorResource != R.color.white) {
                 noteView.setBackgroundResource(note.backgroundColorResource);
-                titleView.setTextColor(Color.WHITE);
-                textView.setTextColor(Color.WHITE);
+                if (!note.title.isEmpty()) {
+                    titleView.setTextColor(Color.WHITE);
+                }
+                if (!note.text.isEmpty()) {
+                    textView.setTextColor(Color.WHITE);
+                }
             }
         }
 

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Заметки</string>
     <string name="pick_color">Выбор цвета</string>
-    <string name="decline">Отмена</string>
+    <string name="accept">Выбрать</string>
     <string name="title_placeholder">Название</string>
     <string name="text_placeholder">Текст заметки</string>
     <string name="loading">Идёт загрузка...</string>

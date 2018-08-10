@@ -3,17 +3,14 @@ package ru.android_school.h_h.eightapp.note_list;
 import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -21,8 +18,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import ru.android_school.h_h.eightapp.R;
 import ru.android_school.h_h.eightapp.note_create.EditActivity;
 import ru.android_school.h_h.eightapp.note_trio.Note;
@@ -30,35 +30,43 @@ import ru.android_school.h_h.eightapp.note_trio.NoteDatabase;
 
 public class ListActivity extends AppCompatActivity {
 
+    //================
+    //ТЕХНИЧЕСКИЕ ПОЛЯ
+    //================
     NoteDatabase db;
     ArrayList<Note> listOfNotes;
     NoteListAdapter listAdapter;
 
+    //================
+    //ВИЗУАЛЬНЫЕ ПОЛЯ
+    //================
+    MenuItem searchMenuItem;
+
     public void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.toolbar_search);
-        MenuItem searchMenuItem = toolbar.getMenu().findItem(R.id.toolbar_search);
+        searchMenuItem = toolbar.getMenu().findItem(R.id.toolbar_search);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem menuItem) {
-                Toast.makeText(ListActivity.this, "Поиск развёрнут", Toast.LENGTH_SHORT)
-                        .show();
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                Toast.makeText(ListActivity.this, "Поиск свёрнут", Toast.LENGTH_SHORT)
-                        .show();
+                listOfNotes.clear();
+                listOfNotes.addAll(db.noteDao().getBySearch(""));
+                listAdapter.notifyDataSetChanged();
                 return true;
             }
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Toast.makeText(ListActivity.this, "Ищется строка: " + s, Toast.LENGTH_SHORT)
-                        .show();
+                listOfNotes.clear();
+                listOfNotes.addAll(db.noteDao().getBySearch(s));
+                listAdapter.notifyDataSetChanged();
                 return true;
             }
 
@@ -90,22 +98,17 @@ public class ListActivity extends AppCompatActivity {
         noteListView.setAdapter(listAdapter);
         noteListView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         db = Room.databaseBuilder(this, NoteDatabase.class, "NoteDatabase")
-                .allowMainThreadQueries()
+//                .allowMainThreadQueries()
                 .build();
         db.noteDao()
                 .getAllLive()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<Note>>() {
                     @Override
                     public void accept(List<Note> notes) throws Exception {
                         progressDialog.dismiss();
-                        Toast.makeText(ListActivity.this, "List updated", Toast.LENGTH_SHORT)
-                                .show();
-                        /*String notesString = "";
-                        for(Note n : notes){
-                            notesString+=n.toString()+"\n=====\n";
-                        }
-                        Log.i("CurrentListState","Array of notes:"+notesString);*/
+                        searchMenuItem.collapseActionView();
                         listOfNotes.clear();
                         listOfNotes.addAll(notes);
                         listAdapter.notifyDataSetChanged();

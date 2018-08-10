@@ -1,6 +1,7 @@
 package ru.android_school.h_h.eightapp.note_create;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -48,14 +49,22 @@ public class ColorRecyclerAdapter extends RecyclerView.Adapter<ColorRecyclerAdap
                     .mutate()
                     .setColorFilter(selectedColorInt, PorterDuff.Mode.SRC_IN);
             if (noteUnderEdit.backgroundColorResource==selectedColorResource) {
+                selectedColor = this;
                 selectIndicator.setVisibility(View.VISIBLE);
+                if (selectedColorResource==R.color.white){
+                    selectIndicator.getDrawable()
+                            .mutate()
+                            .setColorFilter(Color.BLACK,PorterDuff.Mode.SRC_IN);
+                }
             }
         }
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(view.getContext(), "ВЫбран цвет:" + selectedColorInt, Toast.LENGTH_SHORT)
-                    .show();
+            selectedColor.selectIndicator.setVisibility(View.GONE);
+            selectedColor = this;
+            selectedColor.selectIndicator.setVisibility(View.VISIBLE);
+            noteUnderEdit.backgroundColorResource = selectedColorResource;
         }
     }
 

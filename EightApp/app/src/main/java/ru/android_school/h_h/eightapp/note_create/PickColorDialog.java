@@ -35,7 +35,7 @@ public class PickColorDialog extends DialogFragment {
         colorRecycler.setAdapter(colorRecyclerAdapter);
         colorRecycler.setLayoutManager(new GridLayoutManager(getContext(),4));
         return builder.setView(dialogView)
-                .setNegativeButton(R.string.decline, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.accept, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         PickColorDialog.this.getDialog().cancel();

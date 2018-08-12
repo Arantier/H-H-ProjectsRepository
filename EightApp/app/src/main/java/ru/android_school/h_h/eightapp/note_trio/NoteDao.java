@@ -17,16 +17,11 @@ public interface NoteDao {
     @Query("SELECT * FROM Note")
     Flowable<List<Note>> getAll();
 
-    @Query("SELECT * FROM Note WHERE isArchived = 0")
-    Flowable<List<Note>> getAllLive();
-
-    @Query("SELECT * FROM Note WHERE "+
-    "title LIKE '%'||:stringToSearch||'%' OR "+
-    "text LIKE '%'||:stringToSearch||'%'")
-   List<Note> getBySearch(String stringToSearch);
+    @Query("SELECT * FROM Note")
+    Flowable<Note> getAllByOne();
 
     @Insert
-    void insert(Note ...newNote);
+    void insert(Note... newNote);
 
     @Delete
     void delete(Note note);

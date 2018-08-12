@@ -8,4 +8,5 @@
     <string name="empty">Список заметок пуст. Может стоит исправить это? ;)</string>
     <string name="delete">Удалить</string>
     <string name="archive">Заархивировать</string>
+    <string name="unarchive">Разархивировать</string>
 </resources>

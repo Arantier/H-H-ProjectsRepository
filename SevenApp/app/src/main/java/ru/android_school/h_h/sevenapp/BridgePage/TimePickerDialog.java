@@ -73,7 +73,7 @@ public class TimePickerDialog extends DialogFragment {
             //Этот закрепляем за алярмой
             PendingIntent notificationCallIntent = PendingIntent.getBroadcast(getContext(),bridge.getId(),notificationContentIntent,PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager manager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-            manager.set(AlarmManager.RTC,timeToCall,notificationCallIntent);
+            manager.set(AlarmManager.RTC,0,notificationCallIntent);
         }).setNegativeButton(R.string.dialogNegative, (negativeListener, i) -> {
             TimePickerDialog.this.getDialog().cancel();
         });

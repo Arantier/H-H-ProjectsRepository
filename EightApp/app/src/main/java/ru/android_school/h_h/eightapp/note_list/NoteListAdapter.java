@@ -2,7 +2,6 @@ package ru.android_school.h_h.eightapp.note_list;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -67,6 +66,10 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
             MenuInflater inflater = new MenuInflater(view.getContext());
             inflater.inflate(R.menu.context_note, contextMenu);
+            if (note.isArchived){
+                contextMenu.getItem(1)
+                        .setTitle(R.string.unarchive);
+            }
         }
 
         @Override

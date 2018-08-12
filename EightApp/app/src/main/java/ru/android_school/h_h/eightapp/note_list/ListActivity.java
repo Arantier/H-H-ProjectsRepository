@@ -11,16 +11,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import ru.android_school.h_h.eightapp.R;
@@ -34,13 +35,34 @@ public class ListActivity extends AppCompatActivity {
     //ТЕХНИЧЕСКИЕ ПОЛЯ
     //================
     NoteDatabase db;
-    ArrayList<Note> listOfNotes;
+    Flowable<List<Note>> flowableDatabase;
+    ArrayList<Note> exposedNotes;
+    ArrayList<Note> receivedNotes;
     NoteListAdapter listAdapter;
 
     //================
     //ВИЗУАЛЬНЫЕ ПОЛЯ
     //================
     MenuItem searchMenuItem;
+
+    public void replaceList(List<Note> replacerList, boolean showArchivedNotes) {
+        exposedNotes.clear();
+        if (!showArchivedNotes) {
+            for (Note n : replacerList) {
+                if (!n.isArchived){
+                    exposedNotes.add(n);
+                }
+            }
+        } else {
+            exposedNotes.addAll(replacerList);
+        }
+        listAdapter.notifyDataSetChanged();
+        if (exposedNotes.size() != 0) {
+            findViewById(R.id.emptyListReplacer).setVisibility(View.INVISIBLE);
+        } else {
+            findViewById(R.id.emptyListReplacer).setVisibility(View.VISIBLE);
+        }
+    }
 
     public void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,18 +77,20 @@ public class ListActivity extends AppCompatActivity {
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                listOfNotes.clear();
-                listOfNotes.addAll(db.noteDao().getBySearch(""));
-                listAdapter.notifyDataSetChanged();
+                replaceList(receivedNotes,false);
                 return true;
             }
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                listOfNotes.clear();
-                listOfNotes.addAll(db.noteDao().getBySearch(s));
-                listAdapter.notifyDataSetChanged();
+                ArrayList<Note> requestedList = new ArrayList<>();
+                for (Note n : receivedNotes){
+                    if (n.title.contains(s) || n.text.contains(s)){
+                        requestedList.add(n);
+                    }
+                }
+                replaceList(requestedList,true);
                 return true;
             }
 
@@ -93,15 +117,15 @@ public class ListActivity extends AppCompatActivity {
         progressDialog.setMessage(getResources().getString(R.string.loading));
         progressDialog.show();
         RecyclerView noteListView = findViewById(R.id.recyclerView);
-        listOfNotes = new ArrayList<>();
-        listAdapter = new NoteListAdapter(listOfNotes);
+        receivedNotes = new ArrayList<>();
+        exposedNotes = new ArrayList<>();
+        listAdapter = new NoteListAdapter(exposedNotes);
         noteListView.setAdapter(listAdapter);
         noteListView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         db = Room.databaseBuilder(this, NoteDatabase.class, "NoteDatabase")
-//                .allowMainThreadQueries()
                 .build();
         db.noteDao()
-                .getAllLive()
+                .getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<Note>>() {
@@ -109,31 +133,47 @@ public class ListActivity extends AppCompatActivity {
                     public void accept(List<Note> notes) throws Exception {
                         progressDialog.dismiss();
                         searchMenuItem.collapseActionView();
-                        listOfNotes.clear();
-                        listOfNotes.addAll(notes);
-                        listAdapter.notifyDataSetChanged();
-                        if (listOfNotes.size() != 0) {
-                            findViewById(R.id.emptyListReplacer).setVisibility(View.INVISIBLE);
-                        } else {
-                            findViewById(R.id.emptyListReplacer).setVisibility(View.VISIBLE);
-                        }
+                        receivedNotes = (ArrayList) notes;
+                        replaceList(receivedNotes,false);
                     }
                 });
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        Action action;
         switch (item.getItemId()) {
             case (R.id.note_delete):
-                db.noteDao()
-                        .delete(listAdapter.selectedNote);
+                action = new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        db.noteDao()
+                                .delete(listAdapter.selectedNote);
+                    }
+                };
                 break;
             case (R.id.note_archive):
-                listAdapter.selectedNote.isArchived = true;
-                db.noteDao()
-                        .update(listAdapter.selectedNote);
+                listAdapter.selectedNote.isArchived = !listAdapter.selectedNote.isArchived;
+                action = new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        db.noteDao()
+                                .update(listAdapter.selectedNote);
+                    }
+                };
+                break;
+            default:
+                action = new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        Log.e("onContextItemSelected", "Тело метода run в onContextItemReceived пусто. Что-то не так с условием?");
+                    }
+                };
                 break;
         }
+        Completable.fromAction(action).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
         return true;
     }
 
@@ -142,9 +182,17 @@ public class ListActivity extends AppCompatActivity {
         switch (requestCode) {
             case (EditActivity.REQUEST_CODE):
                 if (resultCode == RESULT_OK) {
-                    Note newNote = data.getParcelableExtra(EditActivity.NEW_NOTE);
-                    db.noteDao()
-                            .insert(newNote);
+                    final Note newNote = data.getParcelableExtra(EditActivity.NEW_NOTE);
+                    Completable.fromAction(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            db.noteDao()
+                                    .insert(newNote);
+                        }
+                    })
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe();
                 }
                 break;
         }

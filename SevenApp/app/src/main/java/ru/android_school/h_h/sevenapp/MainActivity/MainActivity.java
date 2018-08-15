@@ -26,35 +26,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
 import ru.android_school.h_h.sevenapp.R;
 
-public class MainActivity extends AppCompatActivity implements ErrorFragment.Refreshable{
+public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
     public static final String TAG = "MainActivity";
-
-    @Override
-    public void refresh() {
-
-    }
-
-    private class ListCallback implements Callback<ArrayList<Bridge>> {
-
-        private ArrayList<Bridge> list;
-
-        @Override
-        public void onResponse(Call<ArrayList<Bridge>> call, Response<ArrayList<Bridge>> response) {
-            list = response.body();
-        }
-
-        @Override
-        public void onFailure(Call<ArrayList<Bridge>> call, Throwable t) {
-            list = null;
-        }
-
-        public ArrayList<Bridge> getList() {
-            return list;
-        }
-    }
 
     protected void blockMapButton(boolean isBlock){
         toolbar.getMenu()

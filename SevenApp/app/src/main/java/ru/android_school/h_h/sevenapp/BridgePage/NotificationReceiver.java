@@ -83,13 +83,14 @@ public class NotificationReceiver extends BroadcastReceiver {
         timeToCall = intent.getIntExtra(INTENT_TIME, -1);
         bridge = intent.getParcelableExtra(INTENT_BRIDGE);
         Log.i(LOG_TAG, "onReceive");
+        Log.i(LOG_TAG, "action = "+intent.getAction());
         Log.i(LOG_TAG, "time = " + timeToCall);
         Log.i(LOG_TAG, "bridge = " + bridge);
         if ((timeToCall < 0) || (bridge == null)) {
-            Log.i(LOG_TAG,"Интент принят некорректно");
+            Log.i(LOG_TAG,"Intent extras has lost");
             createDebugNotification(context);
         } else {
-            Log.i(LOG_TAG,"Интент принят корректно");
+            Log.i(LOG_TAG,"All working good");
             createNotification(context);
         }
     }

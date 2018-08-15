@@ -12,6 +12,7 @@
     <string name="button_reminder_active_end_hour"> час</string>
     <string name="button_reminder_active_end_suffix_2_3_4">а</string>
     <string name="button_reminder_active_end_suffix_others">ов</string>
+    <string name="notificationSet">Напоминание установлено</string>
     <!--Error fragment-->
     <string name="error_text">Возникла ошибка при загрузке данных</string>
     <string name="error_refresh">Обновить</string>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TenApp - Weather app</string>
+    <string name="error_message">Seems service is dead. roflanPominki</string>
+</resources>

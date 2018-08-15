@@ -1,11 +1,19 @@
 package ru.android_school.h_h.sevenapp.BridgePage;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,11 +22,15 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.util.Calendar;
+
 import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
 import ru.android_school.h_h.sevenapp.BridgeClasses.BridgeManager;
 import ru.android_school.h_h.sevenapp.R;
 
-public class BridgePageActivity extends AppCompatActivity {
+public class BridgePageActivity extends AppCompatActivity implements TimePickerDialog.Callback {
 
     public static final int IMAGE_COUNT = 2;
     public static final String BRIDGE_TAG = "bridge";
@@ -49,6 +61,7 @@ public class BridgePageActivity extends AppCompatActivity {
         }
     }
 
+    Bridge bridge;
     Toolbar toolbar;
     ViewPager bridgePhotos;
     ViewGroup bridgeBar;
@@ -82,6 +95,26 @@ public class BridgePageActivity extends AppCompatActivity {
         return result;
     }
 
+    public void createNotificationAndRefreshButton(int minutesToCall) {
+        String logTag = "Notification setting";
+        Calendar timeToCall = BridgeManager.getClosestStart(bridge);
+        timeToCall.add(Calendar.MINUTE, -minutesToCall);
+//            long time = timeToCall.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
+        long timeToCallMillis = Calendar.getInstance().getTimeInMillis() + 5000;
+        Log.i(logTag, "Время выставлено:" + timeToCallMillis + "\nНынешнее время:" + Calendar.getInstance().getTimeInMillis());
+        //В этот интент размещаем данные и пункт назначения
+        Log.i(logTag, "Отправляется мост и время:\nВремя" + minutesToCall + "\nМост:" + bridge);
+        Intent notificationContentIntent = new Intent(this, NotificationReceiver.class);
+        notificationContentIntent.setAction("Some action for example");
+        notificationContentIntent.putExtra(NotificationReceiver.INTENT_TIME, minutesToCall);
+        notificationContentIntent.putExtra(NotificationReceiver.INTENT_BRIDGE, bridge);
+        //Этот закрепляем за алярмой
+        PendingIntent notificationCallIntent = PendingIntent.getBroadcast(this, bridge.getId(), notificationContentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        manager.set(AlarmManager.RTC, 0, notificationCallIntent);
+        ((TextView) reminderButton.findViewById(R.id.reminderButtonText)).setText(getResources().getString(R.string.notificationSet));
+    }
+
     //TODO: Не сделана связь с кнопкой
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,7 +124,7 @@ public class BridgePageActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(listener -> BridgePageActivity.this.finish());
         Intent receivedInfo = getIntent();
-        Bridge bridge = receivedInfo.getParcelableExtra(BRIDGE_TAG);
+        bridge = receivedInfo.getParcelableExtra(BRIDGE_TAG);
         bridgePhotos = findViewById(R.id.imagePager);
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), bridge.getPhotoBridgeOpenURL(), bridge.getPhotoBridgeClosedURL());
         bridgePhotos.setAdapter(adapter);
@@ -103,7 +136,7 @@ public class BridgePageActivity extends AppCompatActivity {
         bridgeDescription.setText(Html.fromHtml(bridge.getDescription()));
         reminderButton.setOnClickListener(view -> {
             Log.i("button", "Button pressed");
-            TimePickerDialog.newInstance(bridge)
+            TimePickerDialog.newInstance(bridge.getName(), this)
                     .show(getSupportFragmentManager(), "time");
         });
     }

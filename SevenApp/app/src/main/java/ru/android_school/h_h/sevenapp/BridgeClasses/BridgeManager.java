@@ -1,11 +1,15 @@
 package ru.android_school.h_h.sevenapp.BridgeClasses;
 
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
 
+import ru.android_school.h_h.sevenapp.BridgePage.NotificationReceiver;
 import ru.android_school.h_h.sevenapp.R;
 
 public class BridgeManager {
@@ -51,6 +55,18 @@ public class BridgeManager {
         return closestStart;
     }
 
+    public static Calendar getClosestStart(Bridge bridge){
+        Calendar closestStart = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
+        closestStart.add(Calendar.DATE,2);
+        for (TimeInterval interval : bridge.getIntervals()){
+            if ((closestStart.compareTo(interval.startCalendar)>0)&&(closestStart.compareTo(now)>0)){
+                closestStart = ((Calendar) interval.startCalendar.clone());
+            }
+        }
+        return closestStart;
+    }
+
     public View makeBridgeBar(View bar){
         ((TextView) bar.findViewById(R.id.bridgeName)).setText(bridge.getName());
         //TODO: Замени дефис на тире
@@ -71,7 +87,13 @@ public class BridgeManager {
         }
         ((TextView) bar.findViewById(R.id.bridgeTime)).setText(formattedTime);
         //TODO:Разобраться с колокольчиком и уведомлением
-        ((ImageView) bar.findViewById(R.id.image_isSubscribed)).setImageResource(R.drawable.ic_bell_off);
+        if (PendingIntent.getBroadcast(bar.getContext(),bridge.getId(),new Intent(bar.getContext(), NotificationReceiver.class),PendingIntent.FLAG_NO_CREATE)!=null){
+            ((ImageView) bar.findViewById(R.id.image_isSubscribed)).setImageResource(R.drawable.ic_bell_on);
+            Log.i("Bell","Notification found");
+        } else {
+            ((ImageView) bar.findViewById(R.id.image_isSubscribed)).setImageResource(R.drawable.ic_bell_off);
+            Log.i("Bell","No notification found");
+        }
         return bar;
     }
 

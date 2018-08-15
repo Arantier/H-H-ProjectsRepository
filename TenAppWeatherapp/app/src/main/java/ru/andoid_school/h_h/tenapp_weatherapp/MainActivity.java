@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements UpdaterService.On
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent intentWithLink = new Intent(MainActivity.this, ImageDownloadService.class);
-                intentWithLink.putExtra(ImageDownloadService.LINK_INTENT_TAG, "https://vk.com/doc95061397_472368036/");
+                intentWithLink.putExtra(ImageDownloadService.LINK_INTENT_TAG, "https://drive.google.com/uc?export=download&id=1fPAla77UWq7ITrI4gHtHCCD8I9qfQiTZ");
                 startService(intentWithLink);
                 return true;
             }

@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -36,7 +37,6 @@ public class ImageDownloadService extends IntentService {
         InputStream receivingStream = null;
         OutputStream fileWritingStream = null;
         try {
-
             byte[] buffer = new byte[4096];
             long fileSize = responseBody.contentLength();
             long fileSizeDownloaded = 0;
@@ -72,6 +72,9 @@ public class ImageDownloadService extends IntentService {
             ZipInputStream zipInputStream = new ZipInputStream(fileInputStream);
             //Буду надеяться, что в архиве и правда один элемент. Ну спецификация формата передачи данных такая, так что почему бы и нет?
             FileOutputStream fileOutputStream = new FileOutputStream(readyFile);
+            if (zipInputStream.getNextEntry()==null) {
+                Log.i("ReceivingTheImage","Архив пустой или неправильный");
+            }
             for (int readLength = zipInputStream.read(buffer); readLength != -1; readLength = zipInputStream.read(buffer)) {
                 fileOutputStream.write(buffer, 0, readLength);
             }
@@ -92,8 +95,8 @@ public class ImageDownloadService extends IntentService {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
                 .create(FileDownloadApi.class)
-//                .downloadFile(intent.getStringExtra(LINK_INTENT_TAG))
-                .downloadFileDebug()
+                .downloadFile(intent.getStringExtra(LINK_INTENT_TAG))
+//                .downloadFileDebug()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<ResponseBody>() {

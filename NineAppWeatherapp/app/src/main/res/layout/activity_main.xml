@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/weatherLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            tools:text="Город" />
+
+        <TextView
+            android:id="@+id/weather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="Загрузка..."
+            android:textSize="20sp"
+            tools:text="Тип погоды" />
+
+        <TextView
+            android:id="@+id/weatherDescription"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            tools:text="Описание погоды" />
+
+        <TextView
+            android:id="@+id/temperatureMax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Максимальная температура" />
+
+        <TextView
+            android:id="@+id/temperatureMed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Средняя температура" />
+
+        <TextView
+            android:id="@+id/temperatureMin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Минимальная температура" />
+
+        <TextView
+            android:id="@+id/humidity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Влажность" />
+
+        <TextView
+            android:id="@+id/pressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Давление" />
+
+        <TextView
+            android:id="@+id/sunrise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Восход" />
+
+        <TextView
+            android:id="@+id/sunset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Закат" />
+
+        <TextView
+            android:id="@+id/windSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Скорость ветра" />
+
+        <TextView
+            android:id="@+id/windDirection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Направление ветра" />
+
+        <TextView
+            android:id="@+id/downloadProgressStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Прогресс загрузки"
+            android:textAlignment="center"/>
+
+        <ProgressBar
+            android:id="@+id/downloadProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
+
+    </LinearLayout>
+
+</LinearLayout>

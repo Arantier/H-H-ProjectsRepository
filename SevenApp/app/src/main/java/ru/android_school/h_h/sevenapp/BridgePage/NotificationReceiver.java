@@ -80,18 +80,26 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        timeToCall = intent.getIntExtra(INTENT_TIME, -1);
-        bridge = intent.getParcelableExtra(INTENT_BRIDGE);
-        Log.i(LOG_TAG, "onReceive");
-        Log.i(LOG_TAG, "action = "+intent.getAction());
-        Log.i(LOG_TAG, "time = " + timeToCall);
-        Log.i(LOG_TAG, "bridge = " + bridge);
-        if ((timeToCall < 0) || (bridge == null)) {
-            Log.i(LOG_TAG,"Intent extras has lost");
-            createDebugNotification(context);
-        } else {
-            Log.i(LOG_TAG,"All working good");
-            createNotification(context);
+        String action = intent.getAction();
+        Log.i("csc","I'm working");
+        switch (action) {
+            case "ru.android_school.h_h.sevenapp.MAKE_NOTIFICATION":
+                timeToCall = intent.getIntExtra(INTENT_TIME, -1);
+                bridge = intent.getParcelableExtra(INTENT_BRIDGE);
+                Log.i(LOG_TAG, "onReceive");
+                Log.i(LOG_TAG, "action = " + intent.getAction());
+                Log.i(LOG_TAG, "time = " + timeToCall);
+                Log.i(LOG_TAG, "bridge = " + bridge);
+                if ((timeToCall < 0) || (bridge == null)) {
+                    Log.i(LOG_TAG, "Intent extras has lost");
+                    createDebugNotification(context);
+                } else {
+                    Log.i(LOG_TAG, "All working good");
+                    createNotification(context);
+                }
+                break;
+            default:
+                break;
         }
     }
 

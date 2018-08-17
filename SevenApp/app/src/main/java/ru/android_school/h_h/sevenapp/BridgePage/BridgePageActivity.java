@@ -107,8 +107,10 @@ public class BridgePageActivity extends AppCompatActivity implements TimePickerD
         Log.i(logTag, "Время выставлено:" + timeToCallMillis + "\nНынешнее время:" + Calendar.getInstance().getTimeInMillis());
         //В этот интент размещаем данные и пункт назначения
         Log.i(logTag, "Отправляется мост и время:\nВремя" + minutesToCall + "\nМост:" + bridge);
-        Intent notificationContentIntent = new Intent(this, NotificationReceiver.class);
-        notificationContentIntent.setAction("Some action for example");
+//        Intent notificationContentIntent = new Intent("ru.android_school.h_h.sevenapp.MAKE_NOTIFICATION");
+        Intent notificationContentIntent = new Intent(BridgePageActivity.this,NotificationReceiver.class);
+        notificationContentIntent.setAction("ru.android_school.h_h.sevenapp.MAKE_NOTIFICATION");
+        notificationContentIntent.putExtra("csc",55);
         notificationContentIntent.putExtra(NotificationReceiver.INTENT_TIME, minutesToCall);
         notificationContentIntent.putExtra(NotificationReceiver.INTENT_BRIDGE, bridge);
         //Этот закрепляем за алярмой

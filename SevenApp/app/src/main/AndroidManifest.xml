@@ -26,7 +26,11 @@
         <receiver
             android:name=".BridgePage.NotificationReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="ru.android_school.h_h.sevenapp.MAKE_NOTIFICATION"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package ru.android_school.h_h.sevenapp.MainActivity;
 
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
+import ru.android_school.h_h.sevenapp.BridgePage.NotificationReceiver;
 import ru.android_school.h_h.sevenapp.R;
 
 public class MainActivity extends AppCompatActivity {

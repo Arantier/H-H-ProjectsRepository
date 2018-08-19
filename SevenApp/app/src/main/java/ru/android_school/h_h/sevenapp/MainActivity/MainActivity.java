@@ -1,6 +1,6 @@
 package ru.android_school.h_h.sevenapp.MainActivity;
 
-import android.content.IntentFilter;
+import android.arch.persistence.room.Room;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,19 +13,16 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
-import ru.android_school.h_h.sevenapp.BridgePage.NotificationReceiver;
+import ru.android_school.h_h.sevenapp.BridgeClasses.BridgeDatabase;
+import ru.android_school.h_h.sevenapp.MainActivity.Fragments.ErrorFragment;
+import ru.android_school.h_h.sevenapp.MainActivity.Fragments.ListFragment;
+import ru.android_school.h_h.sevenapp.MainActivity.Fragments.LoadFragment;
 import ru.android_school.h_h.sevenapp.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,23 +31,29 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
 
-    protected void blockMapButton(boolean isBlock){
+    public ArrayList<Bridge> listOfBridges;
+
+    protected void blockMapButton(boolean isBlock) {
         toolbar.getMenu()
                 .getItem(0)
                 .setEnabled(!isBlock);
     }
 
     //Не особо свичится
-    protected void switchMapButton(){
-        MenuItem menuItem =toolbar.getMenu()
+    protected void switchMapButton() {
+        MenuItem menuItem = toolbar.getMenu()
                 .getItem(0);
         menuItem.setChecked(!menuItem.isChecked());
     }
 
-    protected void switchMapButton(boolean isList){
+    protected void switchMapButton(boolean isList) {
         toolbar.getMenu()
                 .getItem(0)
                 .setChecked(isList);
+    }
+
+    public void sendToDatabase(ArrayList<Bridge> listToSend) {
+
     }
 
     @Override
@@ -68,47 +71,30 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainer, load)
                 .commit();
-        Disposable disposable = Observable.create((ObservableOnSubscribe<ArrayList<Bridge>>) emitter -> {
-            Gson bridgeGson = new GsonBuilder()
-                    .registerTypeHierarchyAdapter(List.class, new BridgeJSONAdapter())
-                    .serializeNulls()
-                    .create();
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://gdemost.handh.ru/api/v1/")
-                    .addConverterFactory(GsonConverterFactory.create(bridgeGson))
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build();
-            ServerApi serverApi = retrofit.create(ServerApi.class);
-            serverApi.receiveBridgesFlat()
-                    .enqueue(new Callback<ArrayList<Bridge>>() {
-                        @Override
-                        public void onResponse(Call<ArrayList<Bridge>> call, Response<ArrayList<Bridge>> response) {
-                            if (response.body()!=null) {
-                                Log.i("rxJava","Responce correct");
-                                emitter.onNext(response.body());
-                                emitter.onComplete();
-                            } else {
-                                Log.i("rxJava","Responce incorrect");
-                                emitter.onError(new Throwable("Error: responce is incorrect"));
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ArrayList<Bridge>> call, Throwable t) {
-                            Log.i("rxJava","Responce failed:"+t);
-                            emitter.onError(t);
-                        }
-                    });
-        })
+        BridgeDatabase db = Room.databaseBuilder(this, BridgeDatabase.class, "BridgeDatabase")
+                .build();
+        Gson bridgeGson = new GsonBuilder()
+                .registerTypeHierarchyAdapter(List.class, new BridgeJSONAdapter())
+                .serializeNulls()
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://gdemost.handh.ru/api/v1/")
+                .addConverterFactory(GsonConverterFactory.create(bridgeGson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        ServerApi serverApi = retrofit.create(ServerApi.class);
+        serverApi.receiveBridges()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(receivedList ->{
-                    ListFragment list = ListFragment.newInstance(receivedList);
+                .subscribe(receivedList -> {
+                    db.bridgeDao()
+                            .insertList(receivedList);
+                    ListFragment listFragment = ListFragment.newInstance(db);
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentContainer, list)
+                            .replace(R.id.fragmentContainer, listFragment)
                             .commit();
                     blockMapButton(false);
-                }, error ->{
+                }, error -> {
                     ErrorFragment errFragment = ErrorFragment.newInstance();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragmentContainer, errFragment)

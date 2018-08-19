@@ -15,7 +15,7 @@ import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
 import ru.android_school.h_h.sevenapp.BridgeClasses.BridgeManager;
 import ru.android_school.h_h.sevenapp.R;
 
-class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     public static final String TAG = "list_bridges";
 

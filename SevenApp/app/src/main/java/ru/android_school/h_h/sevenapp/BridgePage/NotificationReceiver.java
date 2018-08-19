@@ -41,7 +41,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             builder = new NotificationCompat.Builder(context);
         }
         Intent intent = new Intent(context, BridgePageActivity.class);
-        intent.putExtra(BridgePageActivity.BRIDGE_TAG, bridge);
+        intent.putExtra(BridgePageActivity.BRIDGE_INTENT, bridge);
         PendingIntent makeBridgePageIntent = PendingIntent.getActivity(context, bridge.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = builder.setSmallIcon(R.drawable.ic_adb_black_24dp)
                 .setContentTitle(bridge.getName())

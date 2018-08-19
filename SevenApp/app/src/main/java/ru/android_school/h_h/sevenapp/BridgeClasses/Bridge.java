@@ -1,13 +1,20 @@
 package ru.android_school.h_h.sevenapp.BridgeClasses;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
 
+@Entity
 public class Bridge implements Parcelable {
+
+    @PrimaryKey
     protected int id;
+
+    //TODO:Переработать весь класс, добавить поддержку TimeIntervals для Room (а надо ли?)
     private String name;
     private String description;
     private ArrayList<TimeInterval> intervals;

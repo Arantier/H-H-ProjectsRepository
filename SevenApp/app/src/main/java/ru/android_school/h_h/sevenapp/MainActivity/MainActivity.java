@@ -1,6 +1,6 @@
 package ru.android_school.h_h.sevenapp.MainActivity;
 
-import android.arch.persistence.room.Room;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
-import ru.android_school.h_h.sevenapp.BridgeClasses.BridgeDatabase;
+import ru.android_school.h_h.sevenapp.BridgePage.NotificationReceiver;
 import ru.android_school.h_h.sevenapp.MainActivity.Fragments.ErrorFragment;
 import ru.android_school.h_h.sevenapp.MainActivity.Fragments.ListFragment;
 import ru.android_school.h_h.sevenapp.MainActivity.Fragments.LoadFragment;
@@ -30,8 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     public static final String TAG = "MainActivity";
-
-    public ArrayList<Bridge> listOfBridges;
+    public static final String LAUNCH_WITH_BRIDGE = "launch_bridge";
 
     protected void blockMapButton(boolean isBlock) {
         toolbar.getMenu()
@@ -71,8 +70,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainer, load)
                 .commit();
-        BridgeDatabase db = Room.databaseBuilder(this, BridgeDatabase.class, "BridgeDatabase")
-                .build();
+        NotificationReceiver notificationReceiver = new NotificationReceiver();
+        IntentFilter intentFilter = new IntentFilter(NotificationReceiver.MAKE_NOTIFICATION);
+        intentFilter.addAction(NotificationReceiver.CALL_NOTIFICATION);
+        intentFilter.addAction(NotificationReceiver.REMOVE_NOTIFICATION);
+        this.registerReceiver(notificationReceiver, intentFilter);
         Gson bridgeGson = new GsonBuilder()
                 .registerTypeHierarchyAdapter(List.class, new BridgeJSONAdapter())
                 .serializeNulls()
@@ -82,14 +84,12 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create(bridgeGson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-        ServerApi serverApi = retrofit.create(ServerApi.class);
-        serverApi.receiveBridges()
-                .subscribeOn(Schedulers.io())
+        retrofit.create(ServerApi.class)
+                .receiveBridges()
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe(receivedList -> {
-                    db.bridgeDao()
-                            .insertList(receivedList);
-                    ListFragment listFragment = ListFragment.newInstance(db);
+                    ListFragment listFragment = ListFragment.newInstance(receivedList);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragmentContainer, listFragment)
                             .commit();

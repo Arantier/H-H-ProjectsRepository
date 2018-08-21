@@ -45,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         public void bind(Bridge bridge, OnItemClickListener listener) {
-            new BridgeManager(bridge).makeBridgeBar(view);
+            BridgeManager.makeBridgeBar(bridge,view);
             view.setOnClickListener(AnonListener -> listener.onItemClick(bridge));
         }
     }

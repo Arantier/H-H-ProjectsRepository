@@ -43,6 +43,29 @@ public class BridgeManager {
         return bridgeState;
     }
 
+    public static int currentBridgeState(Bridge bridge){
+        int bridgeState = Bridge.BRIDGE_CONNECTED;
+        for (TimeInterval interval : bridge.getIntervals()){
+            int intervalState = interval.currentState();
+            int possibleBridgeState;
+            switch (intervalState){
+                case (TimeInterval.MORE_THAN_HOUR) :
+                    possibleBridgeState = Bridge.BRIDGE_CONNECTED;
+                    break;
+                case (TimeInterval.LESSER_THAN_HOUR) :
+                    possibleBridgeState = Bridge.BRIDGE_SOON;
+                    break;
+                default:
+                    possibleBridgeState = Bridge.BRIDGE_RAISED;
+                    break;
+            }
+            if (possibleBridgeState>bridgeState) {
+                bridgeState = possibleBridgeState;
+            }
+        }
+        return bridgeState;
+    }
+
     public Calendar getClosestStart(){
         Calendar closestStart = Calendar.getInstance();
         Calendar now = Calendar.getInstance();
@@ -67,14 +90,14 @@ public class BridgeManager {
         return closestStart;
     }
 
-    public View makeBridgeBar(View bar){
+    public static void makeBridgeBar(Bridge bridge, View bar){
         ((TextView) bar.findViewById(R.id.bridgeName)).setText(bridge.getName());
         //TODO: Замени дефис на тире
         String formattedTime = "";
         for (TimeInterval interval : bridge.getIntervals()) {
             formattedTime += interval + "\t";
         }
-        switch (this.currentBridgeState()) {
+        switch (currentBridgeState(bridge)) {
             case (Bridge.BRIDGE_CONNECTED):
                 ((ImageView) bar.findViewById(R.id.image_bridgeState)).setImageResource(R.drawable.ic_bridge_normal);
                 break;
@@ -87,14 +110,14 @@ public class BridgeManager {
         }
         ((TextView) bar.findViewById(R.id.bridgeTime)).setText(formattedTime);
         //TODO:Разобраться с колокольчиком и уведомлением
-        if (PendingIntent.getBroadcast(bar.getContext(),bridge.getId(),new Intent(bar.getContext(), NotificationReceiver.class),PendingIntent.FLAG_NO_CREATE)!=null){
+        PendingIntent possibleNotification = PendingIntent.getBroadcast(bar.getContext(),bridge.getId(),new Intent(NotificationReceiver.CALL_NOTIFICATION),PendingIntent.FLAG_NO_CREATE);
+        if (possibleNotification!=null){
             ((ImageView) bar.findViewById(R.id.image_isSubscribed)).setImageResource(R.drawable.ic_bell_on);
             Log.i("Bell","Notification found");
         } else {
             ((ImageView) bar.findViewById(R.id.image_isSubscribed)).setImageResource(R.drawable.ic_bell_off);
             Log.i("Bell","No notification found");
         }
-        return bar;
     }
 
 }

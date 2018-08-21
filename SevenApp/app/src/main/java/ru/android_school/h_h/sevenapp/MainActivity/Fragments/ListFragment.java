@@ -1,4 +1,4 @@
-package ru.android_school.h_h.sevenapp.MainActivity;
+package ru.android_school.h_h.sevenapp.MainActivity.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import java.util.ArrayList;
 
 import ru.android_school.h_h.sevenapp.BridgePage.BridgePageActivity;
 import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
+import ru.android_school.h_h.sevenapp.MainActivity.MainActivity;
+import ru.android_school.h_h.sevenapp.MainActivity.RecyclerViewAdapter;
 import ru.android_school.h_h.sevenapp.R;
 
 public class ListFragment extends Fragment {
@@ -28,7 +31,8 @@ public class ListFragment extends Fragment {
 
     public void launchBridgeInfo(Bridge bridge) {
         Intent intent = new Intent(getContext(), BridgePageActivity.class);
-        intent.putExtra(BridgePageActivity.BRIDGE_TAG, bridge);
+        intent.setAction(MainActivity.LAUNCH_WITH_BRIDGE);
+        intent.putExtra(BridgePageActivity.INTENT_BRIDGE, bridge);
         startActivity(intent);
     }
 

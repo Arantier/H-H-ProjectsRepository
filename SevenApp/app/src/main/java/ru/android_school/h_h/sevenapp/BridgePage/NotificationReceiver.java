@@ -1,5 +1,6 @@
 package ru.android_school.h_h.sevenapp.BridgePage;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -7,26 +8,36 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import java.util.Calendar;
+import java.util.TreeMap;
+
 import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
+import ru.android_school.h_h.sevenapp.BridgeClasses.BridgeManager;
 import ru.android_school.h_h.sevenapp.R;
 
 public class NotificationReceiver extends BroadcastReceiver {
 
     public static final String INTENT_BRIDGE = "bridge";
+    public static final String INTENT_BRIDGE_ID = "bridge_id";
     public static final String INTENT_TIME = "time";
+    public static final String MAKE_NOTIFICATION = "ru.android_school.h_h.sevenapp.make_notification";
+    public static final String CALL_NOTIFICATION = "ru.android_school.h_h.sevenapp.call_notification";
+    public static final String REMOVE_NOTIFICATION = "ru.android_school.h_h.sevenapp.remove_notification";
+    public static final String TIMERS_PREFERENCES = "ru.android_school.h_h.sevenapp.timers_preferences";
     public static final String LOG_TAG = "NotificationReceiver";
 
-    private Bridge bridge;
-    private int timeToCall;
+    TreeMap<Integer, Bridge> mapOfBridges = new TreeMap<>();
+    SharedPreferences mapOfMinutes;
 
-    public void createNotification(Context context) {
+    public void createNotification(Context context, Bridge bridge, int minutesToCall) {
         NotificationCompat.Builder builder;
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        String description = "Вы просили напомнить о мосте " + BridgePageActivity.makeMinutesString(timeToCall) + " до развода моста";
+        String description = "Вы просили напомнить о мосте " + BridgePageActivity.makeMinutesString(context, minutesToCall) + " до развода моста";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Log.i(LOG_TAG, "Нынешняя версия выше 26");
             String channelId = "" + bridge.getId();
@@ -41,7 +52,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             builder = new NotificationCompat.Builder(context);
         }
         Intent intent = new Intent(context, BridgePageActivity.class);
-        intent.putExtra(BridgePageActivity.BRIDGE_TAG, bridge);
+        intent.putExtra(BridgePageActivity.INTENT_BRIDGE, bridge);
         PendingIntent makeBridgePageIntent = PendingIntent.getActivity(context, bridge.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = builder.setSmallIcon(R.drawable.ic_adb_black_24dp)
                 .setContentTitle(bridge.getName())
@@ -80,24 +91,55 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (mapOfMinutes == null) {
+            mapOfMinutes = context.getSharedPreferences(TIMERS_PREFERENCES, Context.MODE_PRIVATE);
+        }
         String action = intent.getAction();
-        Log.i("csc","I'm working");
         switch (action) {
-            case "ru.android_school.h_h.sevenapp.MAKE_NOTIFICATION":
-                timeToCall = intent.getIntExtra(INTENT_TIME, -1);
-                bridge = intent.getParcelableExtra(INTENT_BRIDGE);
-                Log.i(LOG_TAG, "onReceive");
-                Log.i(LOG_TAG, "action = " + intent.getAction());
-                Log.i(LOG_TAG, "time = " + timeToCall);
-                Log.i(LOG_TAG, "bridge = " + bridge);
-                if ((timeToCall < 0) || (bridge == null)) {
-                    Log.i(LOG_TAG, "Intent extras has lost");
-                    createDebugNotification(context);
-                } else {
-                    Log.i(LOG_TAG, "All working good");
-                    createNotification(context);
+            case MAKE_NOTIFICATION: {
+                Bridge bridge = intent.getParcelableExtra(INTENT_BRIDGE);
+                int minutesToCall = intent.getIntExtra(INTENT_TIME, -1);
+                if (minutesToCall != -1) {
+                    mapOfMinutes.edit()
+                            .putInt(bridge.getId() + "", minutesToCall)
+                            .apply();
                 }
-                break;
+                mapOfBridges.put(bridge.getId(), bridge);
+                Intent notificationIntent = new Intent(CALL_NOTIFICATION);
+                notificationIntent.putExtra(INTENT_BRIDGE_ID, bridge.getId());
+                notificationIntent.putExtra(INTENT_TIME, minutesToCall);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, bridge.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                Calendar timeToCall = BridgeManager.getClosestStart(bridge);
+                timeToCall.add(Calendar.MINUTE, -minutesToCall);
+                long timeToCallMillis = timeToCall.getTimeInMillis();
+//                long timeToCallMillis = Calendar.getInstance().getTimeInMillis() + 5000;
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC, timeToCallMillis, pendingIntent);
+            }
+            break;
+            case CALL_NOTIFICATION: {
+                int bridgeId = intent.getIntExtra(INTENT_BRIDGE_ID, -1);
+                int minutesToCall = intent.getIntExtra(INTENT_TIME, -1);
+                mapOfMinutes.edit()
+                        .remove(bridgeId + "")
+                        .apply();
+                Bridge bridge = mapOfBridges.get(bridgeId);
+                createNotification(context, bridge, minutesToCall);
+                mapOfBridges.remove(bridgeId);
+            }
+            break;
+            case REMOVE_NOTIFICATION: {
+                int bridgeId = intent.getIntExtra(INTENT_BRIDGE_ID, -1);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, bridgeId, new Intent(CALL_NOTIFICATION), PendingIntent.FLAG_UPDATE_CURRENT);
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmManager.cancel(pendingIntent);
+                pendingIntent.cancel();
+                mapOfBridges.remove(bridgeId);
+                mapOfMinutes.edit()
+                        .remove(bridgeId + "")
+                        .apply();
+            }
+            break;
             default:
                 break;
         }

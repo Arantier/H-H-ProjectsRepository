@@ -28,7 +28,9 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="ru.android_school.h_h.sevenapp.MAKE_NOTIFICATION"/>
+                <action android:name="ru.android_school.h_h.sevenapp.make_notification"/>
+                <action android:name="ru.android_school.h_h.sevenapp.call_notification"/>
+                <action android:name="ru.android_school.h_h.sevenapp.remove_notification"/>
             </intent-filter>
         </receiver>
     </application>

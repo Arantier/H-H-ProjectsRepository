@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,6 +26,9 @@ public class TimePickerDialog extends DialogFragment {
 
     interface Callback {
         public void createNotificationAndRefreshButton(int minutesToCall);
+
+        public void cancel();
+
     }
 
     public static final String TAG = "time_picker";
@@ -62,10 +66,19 @@ public class TimePickerDialog extends DialogFragment {
         Log.i(TAG, "Bridge's name:" + bridgeName + "\n");
         builder.setView(dialogView);
         builder.setPositiveButton(R.string.dialogPositive, (positiveListener, i) -> {
-           callbackToActivity.createNotificationAndRefreshButton(selectedTimeInMinutes);
+            callbackToActivity.createNotificationAndRefreshButton(selectedTimeInMinutes);
         }).setNegativeButton(R.string.dialogNegative, (negativeListener, i) -> {
             TimePickerDialog.this.getDialog().cancel();
         });
+        //TODO:Сделать отменяемость по статусу
+        if (true) {
+            builder.setNeutralButton(R.string.dialogNeutral, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    callbackToActivity.cancel();
+                }
+            });
+        }
         return builder.create();
     }
 

@@ -24,10 +24,20 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     public static final String INTENT_BRIDGE = "bridge";
     public static final String INTENT_BRIDGE_ID = "bridge_id";
+    public static final String INTENT_BRIDGE_NAME = "bridge_name";
+    public static final String INTENT_BRIDGE_DESCRIPTION = "bridge_descrtiption";
+    public static final String INTENT_BRIDGE_INTERVALS = "bridge_intervals";
+    public static final String INTENT_BRIDGE_PHOTO_OPEN = "bridge_photo_open";
+    public static final String INTENT_BRIDGE_PHOTO_CLOSE = "bridge_photo_close";
+    public static final String INTENT_BRIDGE_LATITUDE = "bridge_latitude";
+    public static final String INTENT_BRIDGE_LONGTITUDE = "bridge_longtitude";
     public static final String INTENT_TIME = "time";
+
     public static final String MAKE_NOTIFICATION = "ru.android_school.h_h.sevenapp.make_notification";
     public static final String CALL_NOTIFICATION = "ru.android_school.h_h.sevenapp.call_notification";
+    public static final String SET_NOTIFICATION = "ru.android_school.h_h.sevenapp.set_notification";
     public static final String REMOVE_NOTIFICATION = "ru.android_school.h_h.sevenapp.remove_notification";
+
     public static final String TIMERS_PREFERENCES = "ru.android_school.h_h.sevenapp.timers_preferences";
     public static final String LOG_TAG = "NotificationReceiver";
 
@@ -137,6 +147,22 @@ public class NotificationReceiver extends BroadcastReceiver {
                 mapOfBridges.remove(bridgeId);
                 mapOfMinutes.edit()
                         .remove(bridgeId + "")
+                        .apply();
+            }
+            break;
+            case SET_NOTIFICATION: {
+                Bridge receivedBridge = new Bridge(intent.getIntExtra(INTENT_BRIDGE_ID, -1),
+                        intent.getStringExtra(INTENT_BRIDGE_NAME),
+                        intent.getStringExtra(INTENT_BRIDGE_DESCRIPTION),
+                        intent.getStringArrayExtra(INTENT_BRIDGE_INTERVALS),
+                        intent.getStringExtra(INTENT_BRIDGE_PHOTO_OPEN),
+                        intent.getStringExtra(INTENT_BRIDGE_PHOTO_CLOSE),
+                        intent.getDoubleExtra(INTENT_BRIDGE_LATITUDE, -1.0),
+                        intent.getDoubleExtra(INTENT_BRIDGE_LONGTITUDE, -1.0));
+                int minutesToCall = intent.getIntExtra(INTENT_TIME, -1);
+                createNotification(context,receivedBridge,minutesToCall);
+                mapOfMinutes.edit()
+                        .remove(receivedBridge.getId()+"")
                         .apply();
             }
             break;

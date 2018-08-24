@@ -1,17 +1,13 @@
 package ru.android_school.h_h.sevenapp.BridgeClasses;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
 
-@Entity
 public class Bridge implements Parcelable {
 
-    @PrimaryKey
     protected int id;
 
     //TODO:Переработать весь класс, добавить поддержку TimeIntervals для Room (а надо ли?)
@@ -28,6 +24,21 @@ public class Bridge implements Parcelable {
     public static final int BRIDGE_RAISED = 2;
     public static final int BRIDGE_SOON = 1;
     public static final int BRIDGE_CONNECTED = 0;
+
+    public Bridge(int id, String name, String description, String[] times, String photoBridgeOpenURL, String photoBridgeClosedURL, double latitude, double longitude) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.photoBridgeOpenURL = photoBridgeOpenURL;
+        this.photoBridgeClosedURL = photoBridgeClosedURL;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        int length = times.length / 2;
+        intervals = new ArrayList<>();
+        for (int i = 0; i < length; i++) {
+            this.addInterval(times[i], times[i + 1]);
+        }
+    }
 
     //Parcelable methods and constructor
     //==============================================

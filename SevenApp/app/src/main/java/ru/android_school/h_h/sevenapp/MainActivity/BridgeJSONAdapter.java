@@ -15,10 +15,6 @@ import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
 public class BridgeJSONAdapter extends TypeAdapter {
     
     public static  final String TAG = "JSON_Adapter";
-    @Override
-    public void write(JsonWriter out, Object value) throws IOException {
-
-    }
 
     public void skipUnwantedValues(JsonReader in) throws IOException {
         in.skipValue();
@@ -57,6 +53,11 @@ public class BridgeJSONAdapter extends TypeAdapter {
             Log.i(TAG,"Last received value:"+ bridge.getIntervals().get(bridge.getIntervals().size()-1));
         }
         in.endArray();
+    }
+
+    @Override
+    public void write(JsonWriter out, Object value) throws IOException {
+
     }
 
     @Override

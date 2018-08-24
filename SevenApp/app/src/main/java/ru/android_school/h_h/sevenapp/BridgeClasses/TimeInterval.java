@@ -92,6 +92,14 @@ public class TimeInterval implements Parcelable {
         return result;
     }
 
+    public String getStartString(){
+        return start;
+    }
+
+    public String getEndString(){
+        return end;
+    }
+
     public int currentState() {
         update();
         Calendar now = Calendar.getInstance();

@@ -1,5 +1,7 @@
 package ru.android_school.h_h.sevenapp.BridgePage;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,19 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Completable;
-import io.reactivex.CompletableEmitter;
-import io.reactivex.CompletableOnSubscribe;
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import ru.android_school.h_h.sevenapp.BridgeClasses.Bridge;
-import ru.android_school.h_h.sevenapp.BridgeClasses.BridgeDatabase;
 import ru.android_school.h_h.sevenapp.BridgeClasses.BridgeManager;
+import ru.android_school.h_h.sevenapp.BridgeClasses.TimeInterval;
 import ru.android_school.h_h.sevenapp.R;
 
 public class BridgePageActivity extends AppCompatActivity implements TimePickerDialog.Callback {
@@ -44,6 +37,7 @@ public class BridgePageActivity extends AppCompatActivity implements TimePickerD
     ViewGroup bridgeBar;
     TextView bridgeDescription;
     ViewGroup reminderButton;
+
     class PagerAdapter extends FragmentPagerAdapter {
 
         String photoOpen;
@@ -86,10 +80,27 @@ public class BridgePageActivity extends AppCompatActivity implements TimePickerD
         Calendar timeToCall = BridgeManager.getClosestStart(bridge);
         timeToCall.add(Calendar.MINUTE, -minutesToCall);
         Intent notificationContentIntent = new Intent(this, NotificationReceiver.class);
-        notificationContentIntent.setAction(NotificationReceiver.MAKE_NOTIFICATION);
+        /*notificationContentIntent.setAction(NotificationReceiver.SET_NOTIFICATION);
         notificationContentIntent.putExtra(NotificationReceiver.INTENT_TIME, minutesToCall);
-        notificationContentIntent.putExtra(NotificationReceiver.INTENT_BRIDGE, bridge);
-        sendBroadcast(notificationContentIntent);
+        notificationContentIntent.putExtra(NotificationReceiver.INTENT_BRIDGE_ID,bridge.getId());
+        notificationContentIntent.putExtra(NotificationReceiver.INTENT_BRIDGE_NAME,bridge.getName());
+        notificationContentIntent.putExtra(NotificationReceiver.INTENT_BRIDGE_DESCRIPTION,bridge.getDescription());
+        notificationContentIntent.putExtra(NotificationReceiver.INTENT_BRIDGE_PHOTO_OPEN,bridge.getPhotoBridgeOpenURL());
+        notificationContentIntent.putExtra(NotificationReceiver.INTENT_BRIDGE_PHOTO_CLOSE,bridge.getPhotoBridgeClosedURL());
+        TimeInterval[] intervals = (TimeInterval[]) bridge.getIntervals().toArray();
+        String[] intervalsStrings = new String[intervals.length*2];
+        for (int i=0;i<intervalsStrings.length;i++){
+            intervalsStrings[i] = intervals[i].getStartString();
+            intervalsStrings[i+1] = intervals[i].getEndString();
+        }
+        notificationContentIntent.putExtra(NotificationReceiver.INTENT_BRIDGE_INTERVALS,intervalsStrings);
+        PendingIntent intentToSend = PendingIntent.getBroadcast(this,bridge.getId(),notificationContentIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        getSharedPreferences(NotificationReceiver.TIMERS_PREFERENCES, Context.MODE_PRIVATE)
+                .edit()
+                .putInt(bridge.getId() + "", minutesToCall)
+                .apply();
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        am.set(AlarmManager.RTC,0,intentToSend);*/
         updateButton(minutesToCall);
     }
 
@@ -149,7 +160,7 @@ public class BridgePageActivity extends AppCompatActivity implements TimePickerD
         bridgeDescription.setText(Html.fromHtml(bridge.getDescription()));
         reminderButton.setOnClickListener(view -> {
             Log.i("button", "Button pressed");
-            TimePickerDialog.newInstance(bridge.getName(), this)
+            TimePickerDialog.newInstance(bridge.getId(), bridge.getName(), this)
                     .show(getSupportFragmentManager(), "time");
         });
     }

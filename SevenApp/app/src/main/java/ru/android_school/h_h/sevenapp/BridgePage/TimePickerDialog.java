@@ -33,12 +33,14 @@ public class TimePickerDialog extends DialogFragment {
 
     public static final String TAG = "time_picker";
 
+    private int bridgeId;
     private String bridgeName;
     private Callback callbackToActivity;
     private int selectedTimeInMinutes;
 
-    public static TimePickerDialog newInstance(String bridgeName, Callback callbackToActivity) {
+    public static TimePickerDialog newInstance(int bridgeId, String bridgeName, Callback callbackToActivity) {
         TimePickerDialog instance = new TimePickerDialog();
+        instance.bridgeId = bridgeId;
         instance.bridgeName = bridgeName;
         instance.callbackToActivity = callbackToActivity;
         return instance;
@@ -70,8 +72,8 @@ public class TimePickerDialog extends DialogFragment {
         }).setNegativeButton(R.string.dialogNegative, (negativeListener, i) -> {
             TimePickerDialog.this.getDialog().cancel();
         });
-        //TODO:Сделать отменяемость по статусу
-        if (true) {
+        PendingIntent notificationStatus = PendingIntent.getBroadcast(getContext(),bridgeId,new Intent(NotificationReceiver.CALL_NOTIFICATION),PendingIntent.FLAG_NO_CREATE);
+        if (notificationStatus!=null) {
             builder.setNeutralButton(R.string.dialogNeutral, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">The Most SPB</string>
+    <string name="button_reminder">НАПОМНИТЬ</string>
+    <string name="dialogDescription">За сколько до закрытия моста вас предупредить?</string>
+    <string name="dialogPositive">Ок</string>
+    <string name="dialogNeutral">Отменить</string>
+    <string name="dialogNegative">Назад</string>
+    <string name="notification_start">Вы просили напомнить о мосте за </string>
+    <string name="notification_end_minutes"> минут до начала его развода</string>
+    <string name="notification_end_hours"> часа до начала его развода</string>
+    <string name="button_reminder_active_start">За </string>
+    <string name="button_reminder_active_end_minutes"> минут</string>
+    <string name="button_reminder_active_end_hour"> час</string>
+    <string name="button_reminder_active_end_suffix_2_3_4">а</string>
+    <string name="button_reminder_active_end_suffix_others">ов</string>
+    <string name="notificationSet">Напоминание установлено</string>
+    <!--Error fragment-->
+    <string name="error_text">Возникла ошибка при загрузке данных</string>
+    <string name="error_refresh">Обновить</string>
+    ,,!--Load fragment-->
+    <string name="load_text">Загружаем список…</string>
+    <string name="permission_rationale_title">Запрос разрешений на геолокацию</string>
+    <string name="permission_rationale_message">Для возможности демонстрации Вам местоположения мостов Петербурга на карте необходимо выдать приложению разрешения на доступ к картам.</string>
+    <string name="permission_rationale_close">Хорошо</string>
+    <!--Для минут-->
+    <plurals name="minute_plurals">
+        <item quantity="zero">Напомнить</item>
+        <item quantity="one">за %d минуту</item>
+        <item quantity="two">за %d минуты</item>
+        <item quantity="few">за %d минуты</item>
+        <item quantity="many">за %d минут</item>
+        <item quantity="other">за %d минут</item>
+    </plurals>
+    <plurals name="hours_plurals">
+        <item quantity="zero">Напомнить</item>
+        <item quantity="one">за %d час</item>
+        <item quantity="two">за %d часа</item>
+        <item quantity="few">за %d часа</item>
+        <item quantity="many">за %d часов</item>
+        <item quantity="other">за %d часов</item>
+    </plurals>
+</resources>

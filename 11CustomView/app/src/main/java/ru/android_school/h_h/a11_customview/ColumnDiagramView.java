@@ -10,12 +10,14 @@ import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Random;
 
 public class ColumnDiagramView extends View {
 
@@ -33,7 +35,7 @@ public class ColumnDiagramView extends View {
     //Различные параметры для размещения всякого
     int divideLineY;
     int dateTextLineY;
-    int textSize;
+    int dateTextSize;
     int columnTextSize;
     int maximumHeight;
     int textVerticalPadding;
@@ -42,10 +44,10 @@ public class ColumnDiagramView extends View {
         this.listOfDates = listOfDates;
         //Будем исходить из того, что значения положительны
         maximumValue = 0;
-        if (listOfDates!=null) {
-            if (this.listOfDates.size()>9){
-                Log.d("DiagramData","Too big size, array will be reduced to 9 last elements");
-                for (int i=0;i<listOfDates.size()-9;i++){
+        if (listOfDates != null) {
+            if (this.listOfDates.size() > 9) {
+                Log.d("DiagramData", "Too big size, array will be reduced to 9 last elements");
+                for (int i = 0; i < listOfDates.size() - 9; i++) {
                     this.listOfDates.remove(i);
                 }
             }
@@ -57,14 +59,39 @@ public class ColumnDiagramView extends View {
             }
             listOfSavedDates = (ArrayList<DateWithValue>) listOfDates.clone();
         }
-        invalidate();
-        requestLayout();
+    }
+
+    public void generateRandomValues() {
+        Random random = new Random();
+        int sizeOfArray = random.nextInt(9);
+        ArrayList<DateWithValue> newData = new ArrayList<>(sizeOfArray);
+        for (int i = 0; i < sizeOfArray; i++) {
+            Calendar date = Calendar.getInstance();
+            int pastDays = random.nextInt(100);
+            date.add(Calendar.DAY_OF_YEAR, -pastDays);
+            int value = random.nextInt(100);
+            newData.add(new DateWithValue(value, date));
+        }
+        setData(newData);
+    }
+
+    public void updateWithRandomValues(){
+        Random random = new Random();
+        int sizeOfArray = listOfDates.size();
+        ArrayList<DateWithValue> newData = new ArrayList<>(sizeOfArray);
+        for (int i = 0; i < sizeOfArray; i++) {
+            Calendar date = Calendar.getInstance();
+            int pastDays = random.nextInt(100);
+            date.add(Calendar.DAY_OF_YEAR, -pastDays);
+            int value = random.nextInt(100);
+            newData.add(new DateWithValue(value, date));
+        }
+        setData(newData);
     }
 
     public void startMyAnimation() {
-        for (int i=0;i<listOfDates.size();i++){
-            animateColumn(i);
-        }
+        updateWithRandomValues();
+        invalidate();
     }
 
     public ColumnDiagramView(Context context, @Nullable AttributeSet attrs) {
@@ -78,8 +105,14 @@ public class ColumnDiagramView extends View {
             dateTextColor = array.getColor(R.styleable.ColumnDiagramView_dateTextColor, Color.BLACK);
             columnTextColor = array.getColor(R.styleable.ColumnDiagramView_columnColor, Color.BLACK);
         } finally {
+            init();
             array.recycle();
         }
+    }
+
+    public void init(){
+        dateTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,10,getResources().getDisplayMetrics());
+        columnTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,11,getResources().getDisplayMetrics());
     }
 
     private int measureDimension(int desiredSize, int measuredSpec) {
@@ -113,12 +146,12 @@ public class ColumnDiagramView extends View {
         viewWidth = measureDimension(desiredWidth, widthMeasureSpec);
         viewHeight = measureDimension(desiredHeight, heightMeasureSpec);
 
-        int restOfHeight = viewHeight/10;
-        maximumHeight = viewHeight*8/10;
-        textSize = restOfHeight*8/10;
-        textVerticalPadding = restOfHeight/10;
-        divideLineY = viewHeight*9/10;
-        dateTextLineY = divideLineY+ textSize +textVerticalPadding;
+        int restOfHeight = viewHeight / 10;
+        maximumHeight = viewHeight * 8 / 10;
+        dateTextSize = restOfHeight * 8 / 10;
+        textVerticalPadding = restOfHeight / 10;
+        divideLineY = viewHeight * 9 / 10;
+        dateTextLineY = divideLineY + dateTextSize + textVerticalPadding;
 
         setMeasuredDimension(viewWidth, viewHeight);
     }
@@ -126,41 +159,41 @@ public class ColumnDiagramView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (listOfDates!=null){
-            for (int i=0;i<listOfDates.size();i++){
-                drawColumn(i,canvas);
+        if (listOfDates != null) {
+            for (int i = 0; i < listOfDates.size(); i++) {
+                drawColumn(i, canvas);
             }
         }
     }
 
-    public void drawColumn(int position, Canvas canvas){
-        int x = viewWidth*(position+1)/(listOfDates.size()+1);
+    public void drawColumn(int position, Canvas canvas) {
+        int x = viewWidth * (position + 1) / (listOfDates.size() + 1);
         Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(dateTextColor);
         textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setTextSize(textSize);
-        canvas.drawText(listOfDates.get(position).getFancyDate(),x,dateTextLineY,textPaint);
+        textPaint.setTextSize(dateTextSize);
+        canvas.drawText(listOfDates.get(position).getFancyDate(), x, dateTextLineY, textPaint);
         Paint columnPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         columnPaint.setColor(columnTextColor);
         columnPaint.setStyle(Paint.Style.FILL);
-        int columnHeight = maximumHeight*listOfDates.get(position).value/maximumValue;
-        int columnWidth = viewWidth/(listOfDates.size()+1)/15;
-        Log.d("ColDiagr","Height of "+position+" column:"+columnHeight);
-        Log.d("ColDiagr","Width of "+position+" column:"+columnWidth);
-        RectF column = new RectF(x-columnWidth/2,divideLineY-columnHeight,x+columnWidth/2,divideLineY);
-        canvas.drawRoundRect(column,10,10,columnPaint);
+        int columnHeight = maximumHeight * listOfDates.get(position).value / maximumValue;
+        int columnWidth = viewWidth / (listOfDates.size() + 1) / 15;
+        Log.d("ColDiagr", "Height of " + position + " column:" + columnHeight);
+        Log.d("ColDiagr", "Width of " + position + " column:" + columnWidth);
+        RectF column = new RectF(x - columnWidth / 2, divideLineY - columnHeight, x + columnWidth / 2, divideLineY);
+        canvas.drawRoundRect(column, 10, 10, columnPaint);
         columnPaint.setTextAlign(Paint.Align.CENTER);
-        columnPaint.setTextSize(textSize);
-        canvas.drawText(listOfDates.get(position).value+"",x,divideLineY-columnHeight-textVerticalPadding,columnPaint);
+        columnPaint.setTextSize(dateTextSize);
+        canvas.drawText(listOfDates.get(position).value + "", x, divideLineY - columnHeight - textVerticalPadding, columnPaint);
     }
 
-    public void animateColumn(int position){
-        ValueAnimator animator = ValueAnimator.ofInt(listOfSavedDates.get(position).value,listOfDates.get(position).value);
+    public void animateColumn(int position) {
+        ValueAnimator animator = ValueAnimator.ofInt(listOfSavedDates.get(position).value, listOfDates.get(position).value);
         animator.setDuration(500);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                Log.d("Animation",valueAnimator.getAnimatedValue()+"");
+                Log.d("Animation", valueAnimator.getAnimatedValue() + "");
             }
         });
         animator.start();
@@ -168,7 +201,13 @@ public class ColumnDiagramView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        startMyAnimation();
-        return true;
+        if (event.getAction() ==MotionEvent.ACTION_DOWN) {
+            startMyAnimation();
+            return true;
+        } else {
+            return false;
+        }
     }
+
+
 }

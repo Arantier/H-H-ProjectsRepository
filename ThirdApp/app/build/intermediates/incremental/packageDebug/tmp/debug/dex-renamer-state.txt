@@ -1,4 +1,0 @@
-#Fri Jun 22 17:14:04 MSK 2018
-base.0=C\:\\Users\\Dmitry\\Desktop\\CodingStuff\\Heads and hands\\ThirdApp\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-path.0=classes.dex
-renamed.0=classes.dex
